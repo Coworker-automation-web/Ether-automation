@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ether – Workspace</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- ── Left Sidebar ── -->
+    <aside class="sidebar">
+      <a href="index.html" class="sidebar-logo">
+        <svg class="logo-star" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z"/>
+        </svg>
+        <span class="logo-text">Ether</span>
+      </a>
+
+      <nav class="sidebar-nav">
+        <!-- Workspace (active) -->
+        <a href="workspace.html" class="nav-link active">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          <span>Workspace</span>
+        </a>
+
+        <!-- History -->
+        <a href="#" class="nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>History</span>
+        </a>
+
+        <!-- Library -->
+        <a href="#" class="nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+          </svg>
+          <span>Library</span>
+        </a>
+
+        <!-- Agents -->
+        <a href="#" class="nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+          </svg>
+          <span>Agents</span>
+        </a>
+
+        <!-- Settings -->
+        <a href="javascript:void(0)" class="nav-link" id="btnToggleSettings">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <!-- Sidebar Bottom Dunes Card -->
+      <div class="sidebar-footer-card">
+        <svg class="sidebar-footer-waves" viewBox="0 0 140 80" preserveAspectRatio="none" fill="none">
+          <path d="M-10 60 C30 30, 80 75, 150 40 L150 90 L-10 90 Z" fill="#E2D6C6"/>
+          <path d="M-10 40 C40 60, 90 25, 150 55 L150 90 L-10 90 Z" fill="#D8CABE"/>
+          <path d="M-10 20 C50 45, 100 15, 150 35 L150 90 L-10 90 Z" fill="#CEBFB1"/>
+        </svg>
+        <div class="sidebar-footer-content">
+          <div class="sidebar-footer-title">Build. Plan. Create.</div>
+          <div class="sidebar-footer-sub">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z"/>
+            </svg>
+            <span>With Ether.</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Main Area ── -->
+    <div class="main-wrapper">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="topbar-search">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/>
+          </svg>
+          <input type="text" placeholder="Search anything...">
+        </div>
+        <div class="topbar-actions">
+          <button class="btn-icon-top" aria-label="Notifications">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+          </button>
+          <div class="avatar-circle">V</div>
+        </div>
+      </header>
+
+      <!-- Workspace Page Layout -->
+      <div class="workspace-layout">
+        <!-- Main Workspace Card -->
+        <main class="workspace-card">
+          <!-- Header Area -->
+          <div class="workspace-header">
+            <div class="badge-pill">
+              <span class="badge-dot orange"></span>
+              <span>Powered by API Key 1</span>
+              <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </div>
+            <h1 class="workspace-title">What would you like to create?</h1>
+            <p class="workspace-subtitle">Draft, generate, plan — all in one workspace.</p>
+          </div>
+
+          <!-- Tool action pills -->
+          <div class="tool-pills">
+            <button class="btn-outline active" data-tool="write">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+              </svg>
+              <span>Write</span>
+            </button>
+            <button class="btn-outline" data-tool="image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                <circle cx="9" cy="9" r="2"/>
+                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+              </svg>
+              <span>Generate Image</span>
+            </button>
+            <button class="btn-outline" data-tool="plan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+              <span>Create Plan</span>
+            </button>
+            <button class="btn-outline" data-tool="blueprint">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="7" height="7" x="3" y="3" rx="1"/>
+                <rect width="7" height="7" x="14" y="3" rx="1"/>
+                <rect width="7" height="7" x="14" y="14" rx="1"/>
+                <rect width="7" height="7" x="3" y="14" rx="1"/>
+              </svg>
+              <span>Build Blueprint</span>
+            </button>
+            <button class="btn-outline" data-tool="more">
+              <span>More</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;">
+                <path d="m6 9 6 6 6-6"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Canvas Box -->
+          <div class="canvas-box" id="canvasBox">
+            <div class="canvas-empty-state" id="canvasEmptyState">
+              <svg class="canvas-star" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z"/>
+              </svg>
+              <div class="canvas-text" id="canvasPlaceholderText">Start typing or choose a tool above...</div>
+            </div>
+            <div class="canvas-editor-area" id="canvasEditor" contenteditable="true" spellcheck="false"></div>
+          </div>
+
+          <!-- Bottom Workspace Toolbar -->
+          <div class="workspace-bottom-bar">
+            <div class="workspace-bottom-left">
+              <input type="file" id="fileAttachmentInput" style="display:none;">
+              <button class="btn-circle-add" id="btnAttachment" title="Add attachment">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M12 5v14"/>
+                </svg>
+              </button>
+
+              <div class="agent-dropdown-wrapper">
+                <button class="dropdown-pill" id="btnAgentDropdown">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                  <span id="currentAgentLabel">Default Agent</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;">
+                    <path d="m6 9 6 6 6-6"/>
+                  </svg>
+                </button>
+                <div class="agent-dropdown-menu" id="agentMenu">
+                  <div class="agent-item selected" data-agent="Default Agent">✦ Default Agent (Gemini Pro)</div>
+                  <div class="agent-item" data-agent="Fast Agent">⚡ Fast Agent (Gemini Flash)</div>
+                  <div class="agent-item" data-agent="Creative Agent">🎨 Creative Agent</div>
+                  <div class="agent-item" data-agent="Research Agent">🔬 Research Agent</div>
+                </div>
+              </div>
+
+              <button class="dropdown-pill active" id="btnToggleWeb">
+                <span class="badge-dot green" style="width:6px;height:6px;border-radius:50%;margin-right:2px;"></span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="2" x2="22" y1="12" y2="12"/>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+                <span id="webAccessLabel">Web Access</span>
+              </button>
+            </div>
+
+            <button class="btn-primary" id="btnGenerate">
+              <svg viewBox="0 0 24 24" fill="currentColor" id="generateIcon">
+                <polygon points="5 3 19 12 5 21 5 3"/>
+              </svg>
+              <span id="generateBtnText">Generate</span>
+            </button>
+          </div>
+
+          <!-- ── Floating Settings Modal (Matches UI Screenshot exactly) ── -->
+          <div class="settings-modal-backdrop" id="settingsModal">
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <div class="settings-card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                  </svg>
+                  <span>Settings</span>
+                </div>
+                <button class="btn-close-modal" id="btnCloseSettings" aria-label="Close settings">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </button>
+              </div>
+              <p class="settings-card-subtitle">Manage your API keys and preferences</p>
+
+              <!-- Canvas Generation -->
+              <div class="settings-group">
+                <div class="settings-group-header">
+                  <div class="settings-icon-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                    </svg>
+                  </div>
+                  <div class="settings-group-text">
+                    <h4>Canvas Generation</h4>
+                    <p>Used for generating content in the workspace.</p>
+                  </div>
+                </div>
+                <div class="settings-input-row">
+                  <div class="settings-input-wrapper">
+                    <input type="text" id="inputCanvasKey" placeholder="Enter Gemini API Key (Canvas)">
+                  </div>
+                  <button class="btn-test" id="btnTestCanvas">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                    <span id="testCanvasText">Test</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- History Summarization -->
+              <div class="settings-group">
+                <div class="settings-group-header">
+                  <div class="settings-icon-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="8" y1="6" x2="21" y2="6"/>
+                      <line x1="8" y1="12" x2="21" y2="12"/>
+                      <line x1="8" y1="18" x2="21" y2="18"/>
+                      <line x1="3" y1="6" x2="3.01" y2="6"/>
+                      <line x1="3" y1="12" x2="3.01" y2="12"/>
+                      <line x1="3" y1="18" x2="3.01" y2="18"/>
+                    </svg>
+                  </div>
+                  <div class="settings-group-text">
+                    <h4>History Summarization</h4>
+                    <p>Used for organizing and summarizing past chats.</p>
+                  </div>
+                </div>
+                <div class="settings-input-row">
+                  <div class="settings-input-wrapper">
+                    <input type="text" id="inputOrganizerKey" placeholder="Enter Gemini API Key (Organizer)">
+                  </div>
+                  <button class="btn-test" id="btnTestOrganizer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                    <span id="testOrganizerText">Test</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Action buttons -->
+              <div class="settings-card-actions">
+                <button class="btn-cancel" id="btnCancelSettings">Cancel</button>
+                <button class="btn-save" id="btnSaveSettings">Save Changes</button>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- ── Right Panel: Active History ── -->
+        <aside class="history-panel">
+          <div class="history-header">
+            <h2 class="history-title">Active History</h2>
+            <div class="badge-pill">
+              <span class="badge-dot green"></span>
+              <span>Powered by API Key 2</span>
+              <svg class="badge-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Tabs -->
+          <div class="history-tabs">
+            <div class="history-tab active" data-tab="all">All</div>
+            <div class="history-tab" data-tab="recent">Recent</div>
+            <div class="history-tab" data-tab="summarized">Summarized</div>
+          </div>
+
+          <!-- History Cards List -->
+          <div class="history-list">
+            <!-- 1 -->
+            <div class="history-item">
+              <div class="history-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                  <polyline points="10 9 9 9 8 9"/>
+                </svg>
+              </div>
+              <div class="history-item-content">
+                <div class="history-item-title">AI Productivity Tips</div>
+                <div class="history-item-meta">Summarized • 2m ago</div>
+              </div>
+              <div class="history-item-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m9 18 6-6-6-6"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- 2 -->
+            <div class="history-item">
+              <div class="history-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                  <polyline points="10 9 9 9 8 9"/>
+                </svg>
+              </div>
+              <div class="history-item-content">
+                <div class="history-item-title">Project Ethia – Planning</div>
+                <div class="history-item-meta">Summarized • 12m ago</div>
+              </div>
+              <div class="history-item-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m9 18 6-6-6-6"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- 3 -->
+            <div class="history-item">
+              <div class="history-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                  <polyline points="10 9 9 9 8 9"/>
+                </svg>
+              </div>
+              <div class="history-item-content">
+                <div class="history-item-title">Web Design Ideas</div>
+                <div class="history-item-meta">Summarized • 1h ago</div>
+              </div>
+              <div class="history-item-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m9 18 6-6-6-6"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- 4 -->
+            <div class="history-item">
+              <div class="history-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                  <polyline points="10 9 9 9 8 9"/>
+                </svg>
+              </div>
+              <div class="history-item-content">
+                <div class="history-item-title">Study Plan – Class 9</div>
+                <div class="history-item-meta">Summarized • 2h ago</div>
+              </div>
+              <div class="history-item-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m9 18 6-6-6-6"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- 5 -->
+            <div class="history-item">
+              <div class="history-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                  <polyline points="10 9 9 9 8 9"/>
+                </svg>
+              </div>
+              <div class="history-item-content">
+                <div class="history-item-title">Future City Concept</div>
+                <div class="history-item-meta">Summarized • 3h ago</div>
+              </div>
+              <div class="history-item-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m9 18 6-6-6-6"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- 6 -->
+            <div class="history-item">
+              <div class="history-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                  <polyline points="10 9 9 9 8 9"/>
+                </svg>
+              </div>
+              <div class="history-item-content">
+                <div class="history-item-title">Metse App Features</div>
+                <div class="history-item-meta">Summarized • 1d ago</div>
+              </div>
+              <div class="history-item-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m9 18 6-6-6-6"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- 7 -->
+            <div class="history-item">
+              <div class="history-item-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                  <polyline points="10 9 9 9 8 9"/>
+                </svg>
+              </div>
+              <div class="history-item-content">
+                <div class="history-item-title">Fitness Routine</div>
+                <div class="history-item-meta">Summarized • 1d ago</div>
+              </div>
+              <div class="history-item-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m9 18 6-6-6-6"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom View All Button -->
+          <button class="btn-view-all">
+            <span>View All History</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="ether-toast-container" id="toastContainer"></div>
+
+  <script>
+    // ── Toast Notification Helper ──
+    function showToast(message) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'ether-toast';
+      toast.innerHTML = `
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0L14.6 9.4L24 12L14.6 14.6L12 24L9.4 14.6L0 12L9.4 9.4L12 0Z"/>
+        </svg>
+        <span>${message}</span>
+      `;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px) scale(0.95)';
+        setTimeout(() => toast.remove(), 250);
+      }, 2600);
+    }
+
+    // ── Settings Modal Toggle & Persistence ──
+    const modal = document.getElementById('settingsModal');
+    const btnToggleSettings = document.getElementById('btnToggleSettings');
+    const btnCloseSettings = document.getElementById('btnCloseSettings');
+    const btnCancelSettings = document.getElementById('btnCancelSettings');
+    const btnSaveSettings = document.getElementById('btnSaveSettings');
+    const inputCanvas = document.getElementById('inputCanvasKey');
+    const inputOrganizer = document.getElementById('inputOrganizerKey');
+
+    // Load persisted keys if any
+    if (localStorage.getItem('ether_gemini_canvas_key')) {
+      inputCanvas.value = localStorage.getItem('ether_gemini_canvas_key');
+    }
+    if (localStorage.getItem('ether_gemini_organizer_key')) {
+      inputOrganizer.value = localStorage.getItem('ether_gemini_organizer_key');
+    }
+
+    function toggleSettings() {
+      modal.classList.toggle('hidden');
+    }
+
+    btnToggleSettings.addEventListener('click', toggleSettings);
+    btnCloseSettings.addEventListener('click', toggleSettings);
+    btnCancelSettings.addEventListener('click', toggleSettings);
+
+    btnSaveSettings.addEventListener('click', () => {
+      localStorage.setItem('ether_gemini_canvas_key', inputCanvas.value.trim());
+      localStorage.setItem('ether_gemini_organizer_key', inputOrganizer.value.trim());
+      showToast('API keys and preferences saved');
+      modal.classList.add('hidden');
+    });
+
+    // Test buttons
+    const btnTestCanvas = document.getElementById('btnTestCanvas');
+    const testCanvasText = document.getElementById('testCanvasText');
+    btnTestCanvas.addEventListener('click', () => {
+      testCanvasText.innerText = 'Testing...';
+      setTimeout(() => {
+        testCanvasText.innerText = '✓ Valid';
+        testCanvasText.style.color = 'var(--accent-green)';
+        showToast('Gemini Canvas Key verified successfully');
+        setTimeout(() => {
+          testCanvasText.innerText = 'Test';
+          testCanvasText.style.color = '';
+        }, 2500);
+      }, 700);
+    });
+
+    const btnTestOrganizer = document.getElementById('btnTestOrganizer');
+    const testOrganizerText = document.getElementById('testOrganizerText');
+    btnTestOrganizer.addEventListener('click', () => {
+      testOrganizerText.innerText = 'Testing...';
+      setTimeout(() => {
+        testOrganizerText.innerText = '✓ Valid';
+        testOrganizerText.style.color = 'var(--accent-green)';
+        showToast('Gemini History Organizer Key verified');
+        setTimeout(() => {
+          testOrganizerText.innerText = 'Test';
+          testOrganizerText.style.color = '';
+        }, 2500);
+      }, 700);
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+      }
+    });
+
+    // ── Tool Pills Selection & Canvas Mode ──
+    const toolPlaceholders = {
+      write: 'Start typing or draft your ideas here...',
+      image: 'Describe the image you want to generate with Ether...',
+      plan: 'Enter your objective to generate a step-by-step execution plan...',
+      blueprint: 'Define system architecture or technical blueprint components...',
+      more: 'Choose from additional AI models and workflow templates...'
+    };
+
+    let currentTool = 'write';
+    document.querySelectorAll('.tool-pills .btn-outline').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tool-pills .btn-outline').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const tool = btn.getAttribute('data-tool');
+        currentTool = tool;
+        const text = toolPlaceholders[tool] || 'Start typing or choose a tool above...';
+        document.getElementById('canvasPlaceholderText').innerText = text;
+        showToast(`Switched mode to ${btn.querySelector('span').innerText}`);
+      });
+    });
+
+    // ── Interactive Canvas Editing ──
+    const canvasBox = document.getElementById('canvasBox');
+    const canvasEmpty = document.getElementById('canvasEmptyState');
+    const canvasEditor = document.getElementById('canvasEditor');
+
+    canvasBox.addEventListener('click', () => {
+      if (!canvasEditor.classList.contains('has-content')) {
+        canvasEmpty.style.display = 'none';
+        canvasEditor.classList.add('has-content');
+        canvasEditor.focus();
+      }
+    });
+
+    canvasEditor.addEventListener('input', () => {
+      if (canvasEditor.innerText.trim() === '') {
+        canvasEmpty.style.display = 'flex';
+        canvasEditor.classList.remove('has-content');
+      }
+    });
+
+    // ── History Mock Data & Loading ──
+    const historyData = {
+      'AI Productivity Tips': `
+        <h2>AI Productivity Tips & Workflows</h2>
+        <p>A strategic playbook for accelerating creative and analytical output using ambient agents.</p>
+        <h3>1. Structured Workspace Prompts</h3>
+        <p>Establish persistent context by defining system prompts and workspace guidelines upfront.</p>
+        <h3>2. Multi-Agent Orchestration</h3>
+        <p>Delegate specialized research, drafting, and verification tasks across focused agents.</p>
+        <h3>3. Real-Time Canvas Co-Authoring</h3>
+        <p>Iterate directly on documents with instant AI inline suggestions and automatic version summaries.</p>
+      `,
+      'Project Ethia – Planning': `
+        <h2>Project Ethia – Master Planning & Milestones</h2>
+        <p>Strategic roadmap for the Ethia platform release across Q1 and Q2.</p>
+        <h3>Core Deliverables</h3>
+        <ul>
+          <li><strong>Architecture:</strong> Distributed node network with 99.99% uptime target</li>
+          <li><strong>Interface:</strong> Editorial warm-beige design system (Playfair + Inter)</li>
+          <li><strong>Data Security:</strong> End-to-end client key encryption for Gemini models</li>
+        </ul>
+      `,
+      'Web Design Ideas': `
+        <h2>Editorial Web Design Concepts</h2>
+        <p>Exploration of organic, warm-minimalism aesthetics replacing sterile corporate templates.</p>
+        <ul>
+          <li>Warm oatmeal & espresso color palettes with tactile drop shadows</li>
+          <li>High-contrast serif headings paired with clean geometric body text</li>
+          <li>Clay/3D subtle visual elements with smooth physical lighting</li>
+        </ul>
+      `,
+      'Study Plan – Class 9': `
+        <h2>Class 9 Academic Curriculum Study Plan</h2>
+        <p>Structured 12-week revision and mastery schedule.</p>
+        <h3>Weekly Cadence</h3>
+        <ul>
+          <li><strong>Mathematics:</strong> Quadratic equations & geometric theorems (Mon/Wed)</li>
+          <li><strong>Sciences:</strong> Physics motion laws and organic chemistry foundations (Tue/Thu)</li>
+          <li><strong>Literature:</strong> Analytical essays and reading comprehension (Fri)</li>
+        </ul>
+      `,
+      'Future City Concept': `
+        <h2>Future City Concept – Biophilic Urban Architecture</h2>
+        <p>A vision document exploring self-sustaining urban micro-clusters by 2045.</p>
+        <h3>Pillars of Design</h3>
+        <ul>
+          <li>Modular solar-canopy skyways connecting elevated pedestrian plazas</li>
+          <li>Vertical hydroponic farming integrated into residential facades</li>
+          <li>Closed-loop rainwater harvesting and decentralized geothermal cooling</li>
+        </ul>
+      `,
+      'Metse App Features': `
+        <h2>Metse App – Feature Roadmap & User Stories</h2>
+        <p>Core capabilities planned for the mobile application beta launch.</p>
+        <ul>
+          <li><strong>Instant Synchronization:</strong> Offline-first CRDT document sync</li>
+          <li><strong>Smart Voice Notes:</strong> On-device transcription with automatic chaptering</li>
+          <li><strong>Collaborative Canvases:</strong> Multi-user shared boards with presence badges</li>
+        </ul>
+      `,
+      'Fitness Routine': `
+        <h2>Weekly Athletic Performance Routine</h2>
+        <p>Periodized strength, cardiovascular endurance, and recovery protocol.</p>
+        <ul>
+          <li><strong>Day 1:</strong> Lower body power & posterior chain development</li>
+          <li><strong>Day 2:</strong> Zone 2 aerobic base conditioning (45 min)</li>
+          <li><strong>Day 3:</strong> Upper body hypertrophy & scapular stability</li>
+          <li><strong>Day 4:</strong> Active mobility, sauna, and restorative stretching</li>
+        </ul>
+      `
+    };
+
+    const historyItems = document.querySelectorAll('.history-item');
+    historyItems.forEach(item => {
+      item.addEventListener('click', () => {
+        historyItems.forEach(h => h.classList.remove('selected'));
+        item.classList.add('selected');
+
+        const title = item.querySelector('.history-item-title').innerText.trim();
+        const content = historyData[title] || `<h2>${title}</h2><p>Document loaded from history snapshot.</p>`;
+
+        canvasEmpty.style.display = 'none';
+        canvasEditor.classList.add('has-content');
+        canvasEditor.innerHTML = content;
+        showToast(`Loaded "${title}"`);
+      });
+    });
+
+    // ── Generate Button Action ──
+    const btnGenerate = document.getElementById('btnGenerate');
+    const generateIcon = document.getElementById('generateIcon');
+    const generateBtnText = document.getElementById('generateBtnText');
+
+    btnGenerate.addEventListener('click', () => {
+      btnGenerate.classList.add('loading');
+      generateBtnText.innerText = 'Drafting...';
+      showToast('Generating draft via API Key 1...');
+
+      setTimeout(() => {
+        btnGenerate.classList.remove('loading');
+        generateBtnText.innerText = 'Generate';
+
+        canvasEmpty.style.display = 'none';
+        canvasEditor.classList.add('has-content');
+        canvasEditor.innerHTML = `
+          <h2>New Document Draft</h2>
+          <p>Generated by <strong>${document.getElementById('currentAgentLabel').innerText}</strong> using Gemini API Key 1.</p>
+          <h3>Overview</h3>
+          <p>Here is your generated structured outline. You can freely edit, format, or extend any part of this canvas directly.</p>
+          <ul>
+            <li><strong>Core Concept:</strong> Accelerated ideation with ambient AI assistance</li>
+            <li><strong>Next Steps:</strong> Refine document sections or export to library</li>
+          </ul>
+        `;
+        showToast('Document draft created');
+      }, 1000);
+    });
+
+    // ── Web Access Toggle ──
+    const btnToggleWeb = document.getElementById('btnToggleWeb');
+    btnToggleWeb.addEventListener('click', () => {
+      btnToggleWeb.classList.toggle('active');
+      const isActive = btnToggleWeb.classList.contains('active');
+      showToast(isActive ? 'Web Access enabled' : 'Web Access disabled');
+    });
+
+    // ── Agent Selector Popover ──
+    const btnAgentDropdown = document.getElementById('btnAgentDropdown');
+    const agentMenu = document.getElementById('agentMenu');
+    const currentAgentLabel = document.getElementById('currentAgentLabel');
+
+    btnAgentDropdown.addEventListener('click', (e) => {
+      e.stopPropagation();
+      agentMenu.classList.toggle('show');
+    });
+
+    document.querySelectorAll('.agent-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.querySelectorAll('.agent-item').forEach(i => i.classList.remove('selected'));
+        item.classList.add('selected');
+        const agentName = item.getAttribute('data-agent');
+        currentAgentLabel.innerText = agentName;
+        agentMenu.classList.remove('show');
+        showToast(`Active agent: ${agentName}`);
+      });
+    });
+
+    document.addEventListener('click', () => {
+      agentMenu.classList.remove('show');
+    });
+
+    // ── Attachment Picker ──
+    const btnAttachment = document.getElementById('btnAttachment');
+    const fileAttachmentInput = document.getElementById('fileAttachmentInput');
+    btnAttachment.addEventListener('click', () => fileAttachmentInput.click());
+    fileAttachmentInput.addEventListener('change', () => {
+      if (fileAttachmentInput.files && fileAttachmentInput.files[0]) {
+        showToast(`Attached file: ${fileAttachmentInput.files[0].name}`);
+      }
+    });
+
+    // ── Topbar Search Filtering ──
+    const searchInput = document.querySelector('.topbar-search input');
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase().trim();
+      historyItems.forEach(item => {
+        const title = item.querySelector('.history-item-title').innerText.toLowerCase();
+        if (title.includes(query)) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+
+    // ── History Tabs ──
+    document.querySelectorAll('.history-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.history-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const type = tab.getAttribute('data-tab');
+        historyItems.forEach(item => {
+          if (type === 'all') {
+            item.style.display = 'flex';
+          } else if (type === 'recent') {
+            const meta = item.querySelector('.history-item-meta').innerText;
+            item.style.display = (meta.includes('m ago') || meta.includes('1h ago')) ? 'flex' : 'none';
+          } else if (type === 'summarized') {
+            item.style.display = 'flex';
+          }
+        });
+      });
+    });
+
+    // ── View All History Button ──
+    document.querySelector('.btn-view-all').addEventListener('click', () => {
+      document.querySelector('.history-tab[data-tab="all"]').click();
+      historyItems.forEach(item => item.style.display = 'flex');
+      showToast('Showing all 7 workspace history records');
+    });
+  </script>
+</body>
+</html>
