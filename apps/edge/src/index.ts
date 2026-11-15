@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { secureHeaders } from "hono/secure-headers";
+import { errorBody, httpStatusFor } from "@ether/shared";
 import type { Env } from "./env";
 import { isOriginAllowed } from "./lib/origin";
 
@@ -20,7 +21,7 @@ app.use(
 
 app.use("/api/*", async (c, next) => {
   if (!isOriginAllowed(c.req.raw, c.env.APP_ORIGIN)) {
-    return c.json({ error: { code: "bad_origin", message: "Origin not allowed" } }, 403);
+    return c.json(errorBody("bad_origin", "Origin not allowed"), httpStatusFor("bad_origin"));
   }
   await next();
 });
@@ -28,8 +29,8 @@ app.use("/api/*", async (c, next) => {
 app.get("/api/health", (c) => c.json({ ok: true }));
 
 // Phase 2 replaces this with session lookup and the real profile/memberships response.
-app.get("/api/me", (c) => c.json({ error: { code: "unauthenticated", message: "Sign in required" } }, 401));
+app.get("/api/me", (c) => c.json(errorBody("unauthenticated", "Sign in required"), httpStatusFor("unauthenticated")));
 
-app.notFound((c) => c.json({ error: { code: "not_found", message: "Not found" } }, 404));
+app.notFound((c) => c.json(errorBody("not_found", "Not found"), httpStatusFor("not_found")));
 
 export default app;
