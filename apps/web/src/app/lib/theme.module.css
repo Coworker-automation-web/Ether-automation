@@ -1,0 +1,92 @@
+/*
+ * The prototype's design tokens (prototype/styles.css :root), copied verbatim and scoped to the
+ * feature root so they work whatever the shell's tokens.css currently contains. When the shell
+ * adopts these on :root this block becomes redundant but harmless (same names, same values).
+ */
+.theme {
+  /* Surface colors */
+  --bg-page: #F7F3EE;
+  --bg-sidebar: #F7F3EE;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #FCFAF8;
+  --bg-pill: #EDE4D9;
+  --bg-pill-hover: #E3D9CC;
+  --bg-input: #F8F5F1;
+  --bg-tag: #EFE8DE;
+
+  /* Text colors */
+  --text-main: #25180E;
+  --text-body: #4A3A2C;
+  --text-muted: #7E6F62;
+  --text-faint: #A6998C;
+  --text-inverse: #FFFFFF;
+
+  /* Accent & Action colors */
+  --btn-primary: #5C4028;
+  --btn-primary-hover: #47311F;
+  --accent-gold: #C4A78E;
+  --accent-green: #4D8B52;
+  --accent-terracotta: #7B5C45;
+
+  /* Borders & Dividers */
+  --border-main: #E8DFD5;
+  --border-light: #EFE8DE;
+  --border-card: #ECE3D7;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(60, 40, 20, 0.04);
+  --shadow-md: 0 4px 16px rgba(60, 40, 20, 0.06);
+  --shadow-lg: 0 12px 36px rgba(50, 32, 16, 0.09);
+  --shadow-modal: 0 20px 60px rgba(45, 28, 14, 0.16);
+
+  /* Typography (fonts are self-hosted by the shell; fallbacks keep layout stable until they load) */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* The prototype's reset, at element specificity so component classes always win. */
+:where(.theme) *,
+:where(.theme) *::before,
+:where(.theme) *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:where(.theme) button {
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+:where(.theme) input {
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  outline: none;
+  background: none;
+  color: inherit;
+}
+
+/* Accessibility: the prototype relies on browser defaults; make keyboard focus unmistakable. */
+.theme :focus-visible {
+  outline: 2px solid var(--btn-primary);
+  outline-offset: 2px;
+}

@@ -1,0 +1,198 @@
+/* Ported 1:1 from prototype/styles.css (.workspace-*, .tool-pills, .canvas-*, .agent-*). */
+.workspaceLayout {
+  display: flex;
+  flex: 1;
+  min-height: calc(100vh - 60px);
+  padding: 10px 24px 24px 24px;
+  gap: 20px;
+}
+
+.workspaceCard {
+  flex: 1;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-xl);
+  padding: 28px 34px 24px 34px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+  min-width: 0;
+}
+
+.workspaceHeader {
+  margin-bottom: 22px;
+}
+
+.workspaceTitle {
+  font-family: var(--font-serif);
+  font-size: 34px;
+  font-weight: 500;
+  color: var(--text-main);
+  letter-spacing: -0.015em;
+  margin-top: 14px;
+  margin-bottom: 6px;
+}
+
+.workspaceSubtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.toolPills {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.chevronSmall {
+  width: 12px;
+  height: 12px;
+}
+
+.canvasBox {
+  flex: 1;
+  min-height: 380px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 18px;
+  transition: border-color 0.15s ease;
+  cursor: text;
+}
+
+.canvasBox:hover {
+  border-color: #DDD2C4;
+}
+
+.canvasBox:focus-within {
+  border-color: var(--btn-primary);
+}
+
+.canvasEmptyState {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text-faint);
+  user-select: none;
+  pointer-events: none;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.canvasStar {
+  width: 24px;
+  height: 24px;
+  color: var(--accent-gold);
+}
+
+.canvasText {
+  font-size: 14px;
+  color: #9A8D80;
+}
+
+.offlineBadge {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  z-index: 1;
+}
+
+.workspaceBottomBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.workspaceBottomLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.webDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 2px;
+}
+
+/* Agent popover menu */
+.agentMenu {
+  width: 240px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  padding: 6px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 100;
+  font-family: var(--font-sans);
+  color: var(--text-main);
+}
+
+.agentItem {
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--text-body);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.agentItem:hover,
+.agentItem[data-highlighted] {
+  background: var(--bg-tag);
+  color: var(--text-main);
+}
+
+.agentItem[data-highlighted] {
+  outline: 2px solid var(--btn-primary);
+  outline-offset: -2px;
+}
+
+.agentItem[data-state="checked"] {
+  background: var(--bg-pill);
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+@media (max-width: 1080px) {
+  .workspaceLayout {
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canvasBox,
+  .agentItem {
+    transition: none;
+  }
+}

@@ -1,0 +1,448 @@
+/* Shared component styles ported 1:1 from prototype/styles.css (class names camelCased for CSS Modules). */
+
+/* ── Badges & Chips ── */
+.badgePill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--bg-tag);
+  border-radius: var(--radius-full);
+  padding: 5px 13px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-body);
+  width: fit-content;
+}
+
+.badgeDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.orange {
+  background: var(--accent-terracotta);
+}
+
+.green {
+  background: var(--accent-green);
+}
+
+.badgeIcon {
+  width: 12px;
+  height: 12px;
+  color: var(--accent-gold);
+  flex-shrink: 0;
+}
+
+/* ── Primary Pill Buttons ── */
+.btnPrimary {
+  background: var(--btn-primary);
+  color: var(--text-inverse);
+  padding: 9px 22px;
+  border-radius: var(--radius-full);
+  font-size: 13.5px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.btnPrimary:hover {
+  background: var(--btn-primary-hover);
+}
+
+.btnPrimary:active {
+  transform: scale(0.98);
+}
+
+.btnPrimary svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Generate button loading state */
+.loading {
+  opacity: 0.85;
+}
+
+.loading svg {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Not available to this role: stays focusable and explains itself on activation. */
+.unavailable {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btnOutline {
+  border: 1px solid var(--border-main);
+  background: var(--bg-surface);
+  color: var(--text-main);
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnOutline:hover {
+  background: var(--bg-tag);
+  border-color: #D8CEBF;
+}
+
+.btnOutline.active {
+  background: var(--bg-pill);
+  border-color: #D8CEBF;
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.btnOutline svg {
+  width: 14px;
+  height: 14px;
+}
+
+.btnCircleAdd {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border-main);
+  background: var(--bg-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-body);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnCircleAdd:hover {
+  background: var(--bg-tag);
+}
+
+.btnCircleAdd svg {
+  width: 15px;
+  height: 15px;
+}
+
+.dropdownPill {
+  border: 1px solid var(--border-main);
+  background: var(--bg-surface);
+  border-radius: var(--radius-full);
+  padding: 7px 14px;
+  font-size: 13px;
+  color: var(--text-body);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dropdownPill:hover {
+  background: var(--bg-tag);
+}
+
+.dropdownPill svg {
+  width: 14px;
+  height: 14px;
+}
+
+.dropdownPill.active {
+  background: var(--bg-pill);
+  border-color: #D8CEBF;
+  font-weight: 600;
+}
+
+/* ── Floating modal (prototype "settings modal"), used by every dialog in these features ── */
+.modalBackdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(247, 243, 238, 0.45);
+  backdrop-filter: blur(2px);
+  border-radius: var(--radius-xl);
+}
+
+.settingsCard {
+  width: 440px;
+  max-width: 90%;
+  max-height: 92%;
+  overflow-y: auto;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-xl);
+  padding: 26px 28px 22px 28px;
+  box-shadow: var(--shadow-modal);
+  position: relative;
+  animation: modalPop 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalPop {
+  0% { opacity: 0; transform: scale(0.96) translateY(6px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.settingsCardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.settingsCardTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.settingsCardTitle svg {
+  width: 19px;
+  height: 19px;
+  color: var(--text-main);
+}
+
+.btnCloseModal {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnCloseModal:hover {
+  background: var(--bg-tag);
+  color: var(--text-main);
+}
+
+.btnCloseModal svg {
+  width: 15px;
+  height: 15px;
+}
+
+.settingsCardSubtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.settingsGroup {
+  margin-bottom: 20px;
+}
+
+.settingsGroupHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.settingsIconBox {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--bg-tag);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-body);
+  flex-shrink: 0;
+}
+
+.settingsIconBox svg {
+  width: 17px;
+  height: 17px;
+}
+
+.settingsGroupText h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.3;
+}
+
+.settingsGroupText p {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.settingsInputRow {
+  display: flex;
+  gap: 8px;
+}
+
+.settingsInputWrapper {
+  flex: 1;
+  background: var(--bg-input);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-md);
+  padding: 8px 14px;
+  transition: border-color 0.15s ease;
+}
+
+.settingsInputWrapper:focus-within {
+  border-color: #CBB9A7;
+  background: #FFFFFF;
+  outline: 2px solid var(--btn-primary);
+  outline-offset: 2px;
+}
+
+.settingsInputWrapper input {
+  width: 100%;
+  font-size: 13px;
+  color: var(--text-main);
+}
+
+.settingsInputWrapper input:focus-visible {
+  outline: none;
+}
+
+.settingsInputWrapper input::placeholder {
+  color: var(--text-faint);
+}
+
+.btnTest {
+  border: 1px solid var(--border-main);
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-body);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.btnTest:hover {
+  background: var(--bg-tag);
+}
+
+.btnTest svg {
+  width: 12px;
+  height: 12px;
+}
+
+.btnTestValid {
+  color: var(--accent-green);
+}
+
+.settingsCardActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.btnCancel {
+  background: var(--bg-tag);
+  color: var(--text-body);
+  padding: 8px 20px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btnCancel:hover {
+  background: #E5DDD0;
+}
+
+.btnSave {
+  background: var(--btn-primary);
+  color: var(--text-inverse);
+  padding: 8px 22px;
+  border-radius: var(--radius-full);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btnSave:hover {
+  background: var(--btn-primary-hover);
+}
+
+.btnSave:disabled,
+.btnCancel:disabled,
+.btnTest:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* Inline status text inside dialogs (errors, hints). */
+.fieldNote {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+.fieldError {
+  font-size: 12px;
+  color: var(--accent-terracotta);
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .settingsCard,
+  .loading svg {
+    animation: none;
+  }
+
+  .btnPrimary,
+  .btnOutline,
+  .btnCircleAdd,
+  .dropdownPill,
+  .btnCloseModal,
+  .btnTest,
+  .btnCancel,
+  .btnSave,
+  .settingsInputWrapper {
+    transition: none;
+  }
+}
