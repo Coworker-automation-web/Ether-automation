@@ -1,0 +1,88 @@
+/* Section 4: "Built for Teams" with Planet Dome */
+.section {
+  text-align: center;
+  position: relative;
+  padding: 40px 0 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.planetContainer {
+  width: 320px;
+  height: 160px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.planetDome {
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 25%, #FFFFFF 0%, #EFE8DE 40%, #E1D3C2 75%, #CBB9A5 100%);
+  border: 1px solid rgba(220, 206, 190, 0.8);
+  box-shadow: 0 0 50px rgba(220, 206, 190, 0.4);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.planetRing {
+  position: absolute;
+  top: 75px;
+  left: -20px;
+  width: 360px;
+  height: 70px;
+  border: 1px solid rgba(196, 167, 142, 0.45);
+  border-radius: 50%;
+  transform: rotateX(72deg);
+}
+
+.sparkle {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  color: var(--accent-gold);
+}
+
+.eyebrowRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.eyebrowLine {
+  width: 40px;
+  height: 1px;
+  background: var(--border-main);
+}
+
+.eyebrowText {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--text-main);
+  letter-spacing: -0.015em;
+  margin-bottom: 14px;
+}
+
+.desc {
+  font-size: 14.5px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  max-width: 400px;
+}

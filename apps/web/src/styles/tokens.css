@@ -1,7 +1,49 @@
-/* PLACEHOLDER: replace with the variables from the prototype's styles.css (arch §3, migration). */
+/* ETHER design tokens — copied from prototype/styles.css :root.
+   Four values differ from the prototype for WCAG AA contrast (see CONTRAST notes). */
 :root {
-  --bg: #0b0b0f;
-  --fg: #f4f4f6;
-  --muted: #9a9aa6;
-  --accent: #7c8cff;
+  /* Surface colors */
+  --bg-page: #F7F3EE;
+  --bg-sidebar: #F7F3EE;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #FCFAF8;
+  --bg-pill: #EDE4D9;
+  --bg-pill-hover: #E3D9CC;
+  --bg-input: #F8F5F1;
+  --bg-tag: #EFE8DE;
+
+  /* Text colors */
+  --text-main: #25180E;
+  --text-body: #4A3A2C;
+  --text-muted: #7C6D61; /* CONTRAST: was #7E6F62 (4.38:1 on --bg-page); now 4.51:1 */
+  --text-faint: #786E65; /* CONTRAST: was #A6998C (2.52:1 on --bg-page); now 4.51:1 */
+  --text-inverse: #FFFFFF;
+
+  /* Accent & Action colors */
+  --btn-primary: #5C4028;
+  --btn-primary-hover: #47311F;
+  --accent-gold: #C4A78E;
+  --accent-green: #4D8B52;
+  --accent-terracotta: #7B5C45;
+
+  /* Borders & Dividers */
+  --border-main: #E8DFD5;
+  --border-light: #EFE8DE;
+  --border-card: #ECE3D7;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(60, 40, 20, 0.04);
+  --shadow-md: 0 4px 16px rgba(60, 40, 20, 0.06);
+  --shadow-lg: 0 12px 36px rgba(50, 32, 16, 0.09);
+  --shadow-modal: 0 20px 60px rgba(45, 28, 14, 0.16);
+
+  /* Typography */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
 }

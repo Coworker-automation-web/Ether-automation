@@ -17,4 +17,6 @@ pnpm dev:web    # http://localhost:4321
 ```
 
 ## Status
-Phase 1 scaffold. Placeholder UI only: the prototype files (`index.html`, `workspace.html`, `styles.css`, `favicon.svg`) are not in this repo yet; add them to start the UI migration.
+Phase 1. The landing page is migrated from the prototype (`prototype/` is kept as the visual baseline).
+
+Web styling lives in `apps/web/src/styles/` (`tokens.css`, `fonts.css`, `base.css`) and one CSS Module per component in `apps/web/src/app/components/`. Fonts are self-hosted via `@fontsource-variable` (latin subset). Icons come from the `public/icons.svg` sprite through `<Icon name="…" />`.

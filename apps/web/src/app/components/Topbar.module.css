@@ -1,0 +1,107 @@
+/* ── Top Bar ── */
+.topbar {
+  height: 60px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--bg-page);
+}
+
+.search {
+  width: 440px;
+  max-width: 50%;
+  background: #F3ECE4;
+  border: 1px solid #E5DACF;
+  border-radius: var(--radius-full);
+  padding: 7px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.search:focus-within {
+  border-color: #D3C4B3;
+  background: #F9F5F0;
+}
+
+/* Keyboard/text-entry focus ring drawn on the pill (the input's own outline is off). */
+.search:has(input:focus-visible) {
+  outline: 2px solid var(--btn-primary);
+  outline-offset: 2px;
+}
+
+.searchIcon {
+  width: 15px;
+  height: 15px;
+  color: var(--text-faint);
+  flex-shrink: 0;
+}
+
+.search input {
+  width: 100%;
+  font-size: 13px;
+  color: var(--text-main);
+}
+
+/* CONTRAST: --text-faint on the #F3ECE4 pill is 4.25:1; #746A61 is 4.51:1 (4.86:1 on focus bg) */
+.search input::placeholder {
+  color: #746A61;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.iconButton {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--text-muted);
+  transition: all 0.15s ease;
+}
+
+.iconButton:hover {
+  background: var(--bg-tag);
+  color: var(--text-main);
+}
+
+.iconButton svg {
+  width: 18px;
+  height: 18px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #C7B09A;
+  color: #25180E; /* CONTRAST: was #FFFFFF (2.08:1); now 8.31:1 */
+  font-weight: 600;
+  font-size: 13px;
+  line-height: inherit; /* prototype used a <div>; buttons default to line-height: normal */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    padding: 0 16px;
+  }
+  .search {
+    width: auto;
+    flex: 1;
+  }
+}

@@ -1,0 +1,47 @@
+/* Agent popover menu */
+.wrapper {
+  position: relative;
+}
+
+.menu {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  width: 240px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  padding: 6px;
+  box-shadow: var(--shadow-lg);
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 100;
+}
+
+.show {
+  display: flex;
+}
+
+.item {
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--text-body);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.item:hover {
+  background: var(--bg-tag);
+  color: var(--text-main);
+}
+
+.item.selected {
+  background: var(--bg-pill);
+  font-weight: 600;
+  color: var(--text-main);
+}

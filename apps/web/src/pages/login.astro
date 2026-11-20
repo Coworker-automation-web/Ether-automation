@@ -1,16 +1,38 @@
 ---
-import "../styles/base.css";
+import Head from './_Head.astro';
+import { Button } from '../app/components/Button';
 ---
+
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sign in · ETHER</title>
+    <Head
+      title="Sign in · ETHER"
+      description="Sign in to Ether with your Google account."
+    />
   </head>
   <body>
-    <main>
+    <main class="login">
       <h1>Sign in</h1>
-      <a class="button" href="/api/auth/google">Continue with Google</a>
+      <Button variant="primary" href="/api/auth/google">Continue with Google</Button>
     </main>
   </body>
 </html>
+
+<style>
+  .login {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 16px;
+  }
+  h1 {
+    font-family: var(--font-serif);
+    font-size: 38px;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    color: var(--text-main);
+  }
+</style>

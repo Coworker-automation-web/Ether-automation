@@ -1,0 +1,56 @@
+/* Notifications dropdown */
+.wrapper {
+  position: relative;
+}
+
+.popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 280px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-lg);
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+}
+
+.show {
+  display: flex;
+}
+
+.header {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+}
+
+.entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.entry:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.entry p {
+  font-size: 12px;
+  color: var(--text-body);
+  line-height: 1.4;
+}
+
+.entry span {
+  font-size: 10.5px;
+  color: var(--text-faint);
+}

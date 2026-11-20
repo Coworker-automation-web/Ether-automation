@@ -1,0 +1,57 @@
+/* Section 2: "Create your workspace" Card */
+.card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-xl);
+  padding: 38px 46px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 36px;
+  margin-bottom: 40px;
+}
+
+.left {
+  flex: 1;
+  max-width: 440px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-body);
+  margin-bottom: 16px;
+}
+
+.tag svg {
+  width: 15px;
+  height: 15px;
+  color: var(--text-body);
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 38px;
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--text-main);
+  letter-spacing: -0.015em;
+  margin-bottom: 12px;
+}
+
+.desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 1080px) {
+  .card {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,14 @@
+/* Tool action pills */
+.pills {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+/* "More" chevron: 12px (was an inline style); beats Button's `svg { 14px }` */
+.pills button svg.chevron {
+  width: 12px;
+  height: 12px;
+}

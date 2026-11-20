@@ -1,0 +1,93 @@
+/* Canvas Area */
+.box {
+  flex: 1;
+  min-height: 380px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 18px;
+  transition: border-color 0.15s ease;
+  cursor: text;
+}
+
+.box:hover {
+  border-color: #DDD2C4;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-faint);
+  user-select: none;
+}
+
+.star {
+  width: 24px;
+  height: 24px;
+  color: var(--accent-gold);
+}
+
+/* CONTRAST: was #9A8D80 (3.23:1 on white); #7F746A is 4.56:1 */
+.hint {
+  font-size: 14px;
+  color: #7F746A;
+}
+
+/* ── Interactive Enhancements ── */
+.editor {
+  width: 100%;
+  height: 100%;
+  padding: 32px 36px;
+  overflow-y: auto;
+  outline: none;
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--text-main);
+  text-align: left;
+  display: none;
+}
+
+.hasContent {
+  display: block;
+}
+
+.editor h2 {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.editor h3 {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.editor p {
+  color: var(--text-body);
+  margin-bottom: 12px;
+}
+
+.editor ul {
+  padding-left: 20px;
+  margin-bottom: 14px;
+  list-style: disc;
+}
+
+.editor li {
+  margin-bottom: 6px;
+  color: var(--text-body);
+}

@@ -1,0 +1,100 @@
+/* Clay Workspace Window Mockup */
+.mockup {
+  width: 380px;
+  height: 230px;
+  background: #F9F6F1;
+  border: 1px solid #ECE3D7;
+  border-radius: 20px;
+  box-shadow: 0 14px 40px rgba(50, 32, 16, 0.08);
+  padding: 16px 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.topDots {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #DFD3C4;
+}
+
+.body {
+  flex: 1;
+  display: flex;
+  gap: 16px;
+}
+
+.miniSidebar {
+  width: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.barIcon {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  background: #E8DDCF;
+}
+
+.canvas {
+  flex: 1;
+  background: #FFFFFF;
+  border: 1px solid #EBE1D4;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.canvasStar {
+  width: 28px;
+  height: 28px;
+  color: var(--accent-gold);
+}
+
+.cursorArrow {
+  position: absolute;
+  bottom: 18px;
+  right: 28px;
+  width: 20px;
+  height: 20px;
+  color: var(--text-main);
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+
+.rays {
+  position: absolute;
+  top: 10px;
+  right: 18px;
+  display: flex;
+  gap: 3px;
+}
+
+.ray {
+  width: 2px;
+  height: 12px;
+  background: var(--text-main);
+  border-radius: 1px;
+}
+
+.ray:nth-child(1) { transform: rotate(-25deg); height: 10px; }
+.ray:nth-child(2) { transform: rotate(0deg); height: 14px; }
+.ray:nth-child(3) { transform: rotate(25deg); height: 10px; }
+
+@media (max-width: 1080px) {
+  .mockup {
+    width: 100%;
+  }
+}

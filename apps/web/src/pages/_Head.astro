@@ -1,0 +1,33 @@
+---
+// Shared <head> contents. Underscore prefix keeps Astro from routing this file as a page.
+import '../styles/base.css';
+import playfairNormal from '@fontsource-variable/playfair-display/files/playfair-display-latin-wght-normal.woff2?url';
+import jakartaNormal from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+// Absolute URL when `site` is configured in astro.config; relative otherwise.
+const ogImage = Astro.site ? new URL('/og-image.png', Astro.site).href : '/og-image.png';
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="theme-color" content="#F7F3EE" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<link rel="preload" href={jakartaNormal} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={playfairNormal} as="font" type="font/woff2" crossorigin />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />

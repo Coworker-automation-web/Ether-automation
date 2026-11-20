@@ -1,0 +1,81 @@
+/* Bottom Workspace Toolbar */
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.circleAdd {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border-main);
+  background: var(--bg-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-body);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.circleAdd:hover {
+  background: var(--bg-tag);
+}
+
+.circleAdd svg {
+  width: 15px;
+  height: 15px;
+}
+
+.pill {
+  border: 1px solid var(--border-main);
+  background: var(--bg-surface);
+  border-radius: var(--radius-full);
+  padding: 7px 14px;
+  font-size: 13px;
+  color: var(--text-body);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pill:hover {
+  background: var(--bg-tag);
+}
+
+.pill svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Chevron inside a pill: 11px (was an inline style) */
+.pill svg.chevron {
+  width: 11px;
+  height: 11px;
+}
+
+/* Active toggle for web access */
+.pill.active {
+  background: var(--bg-pill);
+  border-color: #D8CEBF;
+  font-weight: 600;
+}
+
+/* Status dot inside the web-access pill (was an inline-styled .badge-dot.green) */
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 2px;
+  flex-shrink: 0;
+  background: var(--accent-green);
+}

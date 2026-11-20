@@ -1,0 +1,15 @@
+/* ── App Layout ── */
+.container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* ── Main Viewport ── */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--bg-page);
+}

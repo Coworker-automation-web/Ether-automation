@@ -1,0 +1,90 @@
+/* Hero Section */
+.block {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 64px;
+  position: relative;
+}
+
+.left {
+  flex: 1;
+  max-width: 520px;
+}
+
+.heading {
+  font-family: var(--font-serif);
+  font-size: 54px;
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+  margin-top: 20px;
+  margin-bottom: 18px;
+}
+
+.heading em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.desc {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 30px;
+  max-width: 440px;
+}
+
+.ctaRow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.learnMore {
+  line-height: normal; /* prototype used a <button>: keep its line-height and centred wrapping */
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.learnMore:hover {
+  opacity: 0.8;
+}
+
+.playCircle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.playCircle svg {
+  width: 11px;
+  height: 11px;
+  color: var(--text-main);
+  margin-left: 1px;
+}
+
+@media (max-width: 1080px) {
+  .block {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .heading {
+    font-size: 38px;
+  }
+}

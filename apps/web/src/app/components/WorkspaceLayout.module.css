@@ -1,0 +1,50 @@
+/* ============================================================
+   PAGE: WORKSPACE SCREEN
+   ============================================================ */
+
+.layout {
+  display: flex;
+  flex: 1;
+  min-height: calc(100vh - 60px);
+  padding: 10px 24px 24px 24px;
+  gap: 20px;
+}
+
+/* Center main card */
+.card {
+  flex: 1;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-xl);
+  padding: 28px 34px 24px 34px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+  min-width: 0;
+}
+
+.header {
+  margin-bottom: 22px;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 34px;
+  font-weight: 500;
+  color: var(--text-main);
+  letter-spacing: -0.015em;
+  margin-top: 14px;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+@media (max-width: 1080px) {
+  .layout {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,117 @@
+/* Hero Right: 3D Visual Composition */
+.visual {
+  width: 440px;
+  height: 340px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.orbit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Floating Avatar Nodes */
+.avatar {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid #FFFFFF;
+  box-shadow: var(--shadow-md);
+  object-fit: cover;
+  background: #E0D3C5;
+}
+
+.av1 {
+  width: 42px;
+  height: 42px;
+  top: 14px;
+  right: 18px;
+}
+
+.av2 {
+  width: 38px;
+  height: 38px;
+  top: 90px;
+  right: 90px;
+}
+
+.av3 {
+  width: 36px;
+  height: 36px;
+  top: 168px;
+  right: 128px;
+}
+
+/* Floating Glass/Clay Cards */
+.teamCard {
+  position: absolute;
+  top: 18px;
+  right: 48px;
+  width: 90px;
+  height: 80px;
+  background: #F8F3ED;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  box-shadow: 0 10px 28px rgba(60, 40, 20, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.teamCard svg {
+  width: 32px;
+  height: 32px;
+  color: var(--text-body);
+}
+
+.docCard {
+  position: absolute;
+  top: 96px;
+  right: 12px;
+  width: 170px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-card);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: var(--shadow-lg);
+  transform: rotate(2deg);
+}
+
+.docLine {
+  height: 5px;
+  border-radius: 3px;
+  background: #EFE7DE;
+  margin-bottom: 6px;
+}
+
+.w80 { width: 80%; }
+.w60 { width: 60%; }
+.w90 { width: 90%; }
+
+.docThumb {
+  height: 58px;
+  border-radius: 8px;
+  background: #EBE1D4;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.docThumbDunes {
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+}
+
+@media (max-width: 1080px) {
+  .visual {
+    align-self: center;
+  }
+}
