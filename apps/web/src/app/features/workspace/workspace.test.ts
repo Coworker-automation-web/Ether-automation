@@ -1,7 +1,7 @@
 import { can } from "@ether/shared";
 import { describe, expect, it } from "vitest";
 import type { WorkspaceAccess } from "../../lib/contracts";
-import { authzContext, capabilitiesFor } from "./access";
+import { authzContext, capabilitiesFor, resolveWorkspace } from "./access";
 import { canvasMessage } from "./canvasState";
 import { AGENTS, agentOption, DEFAULT_PLACEHOLDER, doneMessage, TOOLS, toAiTool, toolOption } from "./tools";
 
@@ -95,5 +95,24 @@ describe("canvasMessage", () => {
     expect(canvasMessage({ ...base, closed: "forbidden" }, "ph").text).toContain("access");
     expect(canvasMessage({ ...base, closed: "revoked" }, "ph").text).toContain("Reload");
     expect(canvasMessage({ ...base, failed: true }, "ph").blocksEditor).toBe(true);
+  });
+});
+
+describe("resolveWorkspace", () => {
+  const me = {
+    user: { id: "u1", email: "a@b.co", name: "Ada", picture: null },
+    memberships: [{ orgId: "o1", orgName: "Org", role: "member" as const, publicWorkspaceId: "pw", aiKeyDelegated: true }],
+  };
+
+  it("builds access and user from /api/me and the route ids", () => {
+    expect(resolveWorkspace(me, "o1", "w9")).toEqual({
+      user: { id: "u1", name: "Ada" },
+      access: { workspaceId: "w9", scope: "organisation", orgId: "o1", role: "member", isOwner: false, aiKeyDelegated: true },
+    });
+  });
+
+  it("is null when the user is not in that organisation", () => {
+    expect(resolveWorkspace(me, "other", "w9")).toBeNull();
+    expect(resolveWorkspace({ ...me, memberships: [] }, "o1", "w9")).toBeNull();
   });
 });

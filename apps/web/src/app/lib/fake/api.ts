@@ -9,9 +9,9 @@ import {
   type Snapshot,
   type SseEvent,
 } from "@ether/shared";
-import { ApiRequestError } from "../errors";
-import type { EtherApi } from "../api/types";
-import { EMPTY_DOC, seedSnapshots, type MockSnapshot } from "./seed";
+import { ApiError } from "../errors";
+import type { EtherApi } from "../client/types";
+import { EMPTY_DOC, MOCK_ME, seedSnapshots, type MockSnapshot } from "./seed";
 import { getMockRoom } from "./rooms";
 import type { DocNode } from "../contracts";
 
@@ -124,16 +124,38 @@ export function createMockApi(options: MockApiOptions = {}): EtherApi {
   const resetAt = (): number => (Math.floor(now() / 86400) + 1) * 86400;
 
   return {
+    async getMe(signal) {
+      await sleep(delayMs, signal);
+      return MOCK_ME;
+    },
+
     async listSnapshots(workspaceId, signal) {
       await sleep(delayMs, signal);
       return [...snapshotsFor(workspaceId)].sort((a, b) => b.created_at - a.created_at).map(strip);
+    },
+
+    async createSnapshot(workspaceId, title) {
+      await sleep(delayMs);
+      const current = getMockRoom(workspaceId)?.getContent() ?? EMPTY_DOC;
+      const named: MockSnapshot = {
+        id: `mock-${nextId++}`,
+        kind: "named",
+        title: title.trim(),
+        summary: null,
+        summary_status: "none",
+        bytes: JSON.stringify(current).length,
+        created_at: now(),
+        content: current,
+      };
+      snapshotsFor(workspaceId).unshift(named);
+      return strip(named);
     },
 
     async restoreSnapshot(workspaceId, snapshotId) {
       await sleep(delayMs);
       const list = snapshotsFor(workspaceId);
       const target = list.find((s) => s.id === snapshotId);
-      if (!target) throw new ApiRequestError("not_found", "That version no longer exists.");
+      if (!target) throw new ApiError("not_found", "That version no longer exists.");
 
       const room = getMockRoom(workspaceId);
       const current = room?.getContent() ?? EMPTY_DOC;
@@ -155,9 +177,9 @@ export function createMockApi(options: MockApiOptions = {}): EtherApi {
     async summarizeSnapshot(workspaceId, snapshotId) {
       await sleep(delayMs);
       const target = snapshotsFor(workspaceId).find((s) => s.id === snapshotId);
-      if (!target) throw new ApiRequestError("not_found", "That version no longer exists.");
+      if (!target) throw new ApiError("not_found", "That version no longer exists.");
       if (summaries >= summaryLimit) {
-        throw new ApiRequestError("ai_limit_reached", "Daily summary limit reached.", { resetAt: resetAt() });
+        throw new ApiError("ai_limit_reached", "Daily summary limit reached.", { resetAt: resetAt() });
       }
       summaries += 1;
       const first = plainText(target.content).replace(/\s+/g, " ").trim().slice(0, 140);
@@ -169,15 +191,15 @@ export function createMockApi(options: MockApiOptions = {}): EtherApi {
 
     async *generate(input, signal) {
       const parsed = aiGenerateSchema.safeParse(input);
-      if (!parsed.success) throw new ApiRequestError("validation", "Invalid request", { status: 400 });
+      if (!parsed.success) throw new ApiError("validation", "Invalid request", { status: 400 });
       const { prompt, tool, agent } = parsed.data;
 
       await sleep(delayMs, signal);
       if (prompt.includes("[daily]")) {
-        throw new ApiRequestError("daily_limit", "Daily platform limit reached.", { resetAt: resetAt() });
+        throw new ApiError("daily_limit", "Daily platform limit reached.", { resetAt: resetAt() });
       }
       if (generations >= generationLimit || prompt.includes("[limit]")) {
-        throw new ApiRequestError("ai_limit_reached", "Daily generation limit reached.", { resetAt: resetAt() });
+        throw new ApiError("ai_limit_reached", "Daily generation limit reached.", { resetAt: resetAt() });
       }
       generations += 1;
 
@@ -221,7 +243,7 @@ export function createMockApi(options: MockApiOptions = {}): EtherApi {
 
     async putAiKey(orgId, apiKey) {
       await sleep(delayMs);
-      if (apiKey.trim().length < 20) throw new ApiRequestError("ai_key_invalid", "That key looks too short.");
+      if (apiKey.trim().length < 20) throw new ApiError("ai_key_invalid", "That key looks too short.");
       keys.set(orgId, apiKey.trim().slice(-4));
     },
 
@@ -237,7 +259,7 @@ export function createMockApi(options: MockApiOptions = {}): EtherApi {
     async uploadToPublicWorkspace(_orgId, file) {
       await sleep(delayMs);
       if (file.size > MAX_UPLOAD_BYTES) {
-        throw new ApiRequestError("payload_too_large", "That file is too large to upload.");
+        throw new ApiError("payload_too_large", "That file is too large to upload.");
       }
       return {
         id: `upload-${nextId++}`,

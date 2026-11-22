@@ -3,6 +3,7 @@ import type {
   AiGenerateInput,
   AiKeyInfo,
   AiUsageResponse,
+  MeResponse,
   RestoreResponse,
   Snapshot,
   SseEvent,
@@ -22,16 +23,20 @@ export interface TestAiKeyResult {
 
 /**
  * Everything the workspace, history and AI features need from the backend. One real implementation
- * (http.ts) and one typed mock (mock/api.ts), selected by PUBLIC_API_MOCK=1.
+ * (http.ts) and one typed in-memory backend (fake/api.ts, served over fetch by lib/mock.ts), selected by PUBLIC_API_MOCK=1.
  */
 export interface EtherApi {
+  getMe(signal?: AbortSignal): Promise<MeResponse>;
+
   listSnapshots(workspaceId: string, signal?: AbortSignal): Promise<Snapshot[]>;
+  /** Names the current document as a version (POST /history, action `name-version`). */
+  createSnapshot(workspaceId: string, title: string): Promise<Snapshot>;
   restoreSnapshot(workspaceId: string, snapshotId: string): Promise<RestoreResponse>;
   summarizeSnapshot(workspaceId: string, snapshotId: string): Promise<SummarizeResult>;
 
   /**
    * Streams `text` events then exactly one terminal `done` or `error`. Failures before the stream
-   * starts (non-2xx) reject with ApiRequestError; failures after it arrive as an `error` event.
+   * starts (non-2xx) reject with ApiError; failures after it arrive as an `error` event.
    */
   generate(input: AiGenerateInput, signal?: AbortSignal): AsyncIterable<SseEvent>;
   getAiUsage(signal?: AbortSignal): Promise<AiUsageResponse>;

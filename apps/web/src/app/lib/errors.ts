@@ -1,6 +1,6 @@
-import { apiErrorSchema, ERROR_STATUS, type ApiError, type ErrorCode } from "@ether/shared";
+import { apiErrorSchema, ERROR_STATUS, type ApiError as ApiErrorBody, type ErrorCode } from "@ether/shared";
 
-export class ApiRequestError extends Error {
+export class ApiError extends Error {
   readonly code: ErrorCode;
   /** HTTP status; 0 means the request never reached the server. */
   readonly status: number;
@@ -9,7 +9,7 @@ export class ApiRequestError extends Error {
 
   constructor(code: ErrorCode, message: string, opts: { status?: number; resetAt?: number; cause?: unknown } = {}) {
     super(message, opts.cause === undefined ? undefined : { cause: opts.cause });
-    this.name = "ApiRequestError";
+    this.name = "ApiError";
     this.code = code;
     this.status = opts.status ?? ERROR_STATUS[code];
     this.resetAt = opts.resetAt;
@@ -20,17 +20,17 @@ export class ApiRequestError extends Error {
   }
 }
 
-export function networkError(cause?: unknown, message = "Network error. Check your connection and try again."): ApiRequestError {
-  return new ApiRequestError("internal", message, { status: 0, cause });
+export function networkError(cause?: unknown, message = "Network error. Check your connection and try again."): ApiError {
+  return new ApiError("internal", message, { status: 0, cause });
 }
 
-export function fromApiError(body: ApiError, status: number): ApiRequestError {
+export function fromApiError(body: ApiErrorBody, status: number): ApiError {
   const { code, message, resetAt } = body.error;
-  return new ApiRequestError(code, message, { status, ...(resetAt === undefined ? {} : { resetAt }) });
+  return new ApiError(code, message, { status, ...(resetAt === undefined ? {} : { resetAt }) });
 }
 
 /** Parses a non-2xx response body; unknown shapes become a generic internal error. */
-export async function errorFromResponse(res: Response): Promise<ApiRequestError> {
+export async function errorFromResponse(res: Response): Promise<ApiError> {
   let json: unknown = null;
   try {
     json = await res.json();
@@ -39,17 +39,17 @@ export async function errorFromResponse(res: Response): Promise<ApiRequestError>
   }
   const parsed = apiErrorSchema.safeParse(json);
   if (parsed.success) return fromApiError(parsed.data, res.status);
-  return new ApiRequestError("internal", `Request failed (${res.status})`, { status: res.status });
+  return new ApiError("internal", `Request failed (${res.status})`, { status: res.status });
 }
 
 export function isAbortError(err: unknown): boolean {
   return typeof err === "object" && err !== null && (err as { name?: unknown }).name === "AbortError";
 }
 
-export function toApiRequestError(err: unknown): ApiRequestError {
-  if (err instanceof ApiRequestError) return err;
+export function toApiError(err: unknown): ApiError {
+  if (err instanceof ApiError) return err;
   const message = err instanceof Error ? err.message : "Something went wrong";
-  return new ApiRequestError("internal", message, { cause: err });
+  return new ApiError("internal", message, { cause: err });
 }
 
 export type ErrorKind =
@@ -74,7 +74,7 @@ export interface ErrorDescription {
 
 /** One place that turns any failure into copy and a state kind the UI can design for. */
 export function describeError(err: unknown): ErrorDescription {
-  const e = toApiRequestError(err);
+  const e = toApiError(err);
   const withReset = e.resetAt === undefined ? {} : { resetAt: e.resetAt };
   if (e.isNetwork) return { kind: "network", message: e.message, suggestAddKey: false };
 

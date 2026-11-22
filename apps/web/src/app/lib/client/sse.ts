@@ -1,8 +1,8 @@
 import { SSE_EVENT, sseDoneDataSchema, sseErrorDataSchema, sseTextDataSchema, type SseEvent } from "@ether/shared";
-import { ApiRequestError, networkError } from "../errors";
+import { ApiError, networkError } from "../errors";
 
-const malformed = (why: string): ApiRequestError =>
-  new ApiRequestError("internal", `Malformed AI stream (${why})`, { status: 502 });
+const malformed = (why: string): ApiError =>
+  new ApiError("internal", `Malformed AI stream (${why})`, { status: 502 });
 
 /** Parses one `event:`/`data:` block. Comments and unknown events yield null. Throws on bad payloads. */
 export function parseSseBlock(block: string): SseEvent | null {

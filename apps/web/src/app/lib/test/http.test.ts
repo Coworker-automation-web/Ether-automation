@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { createHttpApi } from "../api/http";
+import { createHttpApi } from "../client/http";
 
 interface Call {
   readonly url: string;
@@ -20,12 +20,12 @@ const json = (body: unknown, status = 200): Response =>
   new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
 
 describe("http API", () => {
-  it("lists history with same-origin credentials and validates the response", async () => {
+  it("lists history with cookies included and validates the response", async () => {
     const snap = { id: "s1", kind: "auto", title: "T", summary: null, summary_status: "none", bytes: 1, created_at: 5 };
     const { api, calls } = fakeFetch(() => json({ snapshots: [snap] }));
     expect(await api.listSnapshots("w 1")).toEqual([snap]);
     expect(calls[0]?.url).toBe("https://x.test/api/workspaces/w%201/history");
-    expect(calls[0]?.init?.credentials).toBe("same-origin");
+    expect(calls[0]?.init?.credentials).toBe("include");
   });
 
   it("rejects responses that do not match the contract", async () => {

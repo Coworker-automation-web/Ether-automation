@@ -1,6 +1,6 @@
 import { MAX_UPLOAD_BYTES, type AiAgent } from "@ether/shared";
 import { useCallback, useRef, useState } from "react";
-import { useApi } from "../../lib/api/context";
+import { useApi } from "../../lib/client/context";
 import type { CurrentUser, UiTool, WorkspaceAccess } from "../../lib/contracts";
 import { describeError } from "../../lib/errors";
 import { formatBytes } from "../../lib/format";

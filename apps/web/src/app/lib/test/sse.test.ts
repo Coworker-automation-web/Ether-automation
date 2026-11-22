@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { parseSseBlock, parseSseStream } from "../api/sse";
-import { ApiRequestError } from "../errors";
+import { parseSseBlock, parseSseStream } from "../client/sse";
+import { ApiError } from "../errors";
 
 const enc = new TextEncoder();
 
@@ -36,8 +36,8 @@ describe("parseSseBlock", () => {
   });
 
   it("throws on non-JSON or schema-invalid payloads", () => {
-    expect(() => parseSseBlock("event: text\ndata: nope")).toThrow(ApiRequestError);
-    expect(() => parseSseBlock('event: text\ndata: {"text":5}')).toThrow(ApiRequestError);
+    expect(() => parseSseBlock("event: text\ndata: nope")).toThrow(ApiError);
+    expect(() => parseSseBlock('event: text\ndata: {"text":5}')).toThrow(ApiError);
   });
 });
 

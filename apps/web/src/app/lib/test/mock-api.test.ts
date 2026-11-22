@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import type { SseEvent } from "@ether/shared";
-import { ApiRequestError } from "../errors";
-import { cannedMarkdown, chunkText, createMockApi } from "../mock/api";
-import { registerMockRoom } from "../mock/rooms";
+import { ApiError } from "../errors";
+import { cannedMarkdown, chunkText, createMockApi } from "../fake/api";
+import { registerMockRoom } from "../fake/rooms";
 import type { DocNode } from "../contracts";
 
 const NOW = 1_800_000_000;
@@ -78,7 +78,7 @@ describe("mock API: generation", () => {
     await expect(run(make(), "x [daily]")).rejects.toMatchObject({ code: "daily_limit" });
     const capped = make({ generationLimit: 1 });
     await run(capped, "one");
-    await expect(run(capped, "two")).rejects.toBeInstanceOf(ApiRequestError);
+    await expect(run(capped, "two")).rejects.toBeInstanceOf(ApiError);
   });
 
   it("reports failures as a terminal error event, before or part-way through", async () => {

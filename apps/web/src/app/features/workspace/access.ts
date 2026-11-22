@@ -1,5 +1,6 @@
-import { can, type AuthzContext } from "@ether/shared";
-import type { WorkspaceAccess } from "../../lib/contracts";
+import type { AuthzContext, MeResponse } from "@ether/shared";
+import type { CurrentUser, WorkspaceAccess } from "../../lib/contracts";
+import { can } from "../../lib/permissions";
 
 /** The one place a WorkspaceAccess becomes a shared `can()` context. Nothing here re-implements a rule. */
 export function authzContext(access: WorkspaceAccess): AuthzContext {
@@ -35,5 +36,30 @@ export function capabilitiesFor(access: WorkspaceAccess): Capabilities {
     canSummarize: can(access.role, "ai.summarize", ctx),
     canManageAiKey: org && can(access.role, "aikey.manage", ctx),
     canUpload: org && can(access.role, "publicWorkspace.upload", ctx),
+  };
+}
+
+export interface ResolvedWorkspace {
+  readonly access: WorkspaceAccess;
+  readonly user: CurrentUser;
+}
+
+/**
+ * Turns GET /api/me plus the route's ids into what the workspace needs. Null when the user has
+ * no membership in that organisation (the server still decides; this only avoids a doomed load).
+ */
+export function resolveWorkspace(me: MeResponse, orgId: string, workspaceId: string): ResolvedWorkspace | null {
+  const membership = me.memberships.find((m) => m.orgId === orgId);
+  if (!membership) return null;
+  return {
+    user: { id: me.user.id, name: me.user.name },
+    access: {
+      workspaceId,
+      scope: "organisation",
+      orgId,
+      role: membership.role,
+      isOwner: false,
+      aiKeyDelegated: membership.aiKeyDelegated,
+    },
   };
 }

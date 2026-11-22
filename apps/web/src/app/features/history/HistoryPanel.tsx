@@ -5,7 +5,7 @@ import { ChevronRightIcon, FileIcon, ListIcon } from "../../lib/icons";
 import { showToast } from "../../lib/toast";
 import { useNowSeconds } from "../../lib/use-now";
 import { UsageBadge } from "../ai/UsageBadge";
-import { useSnapshots } from "./hooks";
+import { useSnapshots } from "../../lib/queries";
 import { filterSnapshots, HISTORY_TABS, snapshotMeta, snapshotTitle, type HistoryTab } from "./model";
 import { RestoreDialog } from "./RestoreDialog";
 import styles from "./history.module.css";
@@ -26,7 +26,7 @@ export interface HistoryPanelProps {
 const isTab = (value: string): value is HistoryTab => HISTORY_TABS.some((t) => t.value === value);
 
 export function HistoryPanel({ workspaceId, canList, canRestore, canSummarize, query = "", onClearQuery }: HistoryPanelProps) {
-  const snapshots = useSnapshots(workspaceId, canList);
+  const snapshots = useSnapshots(workspaceId, { enabled: canList });
   const nowSec = useNowSeconds();
   const [tab, setTab] = useState<HistoryTab>("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);

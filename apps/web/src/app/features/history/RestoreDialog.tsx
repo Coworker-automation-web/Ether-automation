@@ -7,7 +7,8 @@ import { showToast } from "../../lib/toast";
 import ui from "../../lib/ui.module.css";
 import { useAiConsent } from "../ai/AiProvider";
 import aiStyles from "../ai/ai.module.css";
-import { useRestore, useSummarize } from "./hooks";
+import { useRestoreSnapshot } from "../../lib/queries";
+import { useSummarize } from "./hooks";
 import { snapshotMeta, snapshotTitle } from "./model";
 
 export interface RestoreDialogProps {
@@ -24,7 +25,7 @@ export interface RestoreDialogProps {
  * read as its summary and restored, but not previewed in the editor (see report).
  */
 export function RestoreDialog({ workspaceId, snapshot, nowSec, canRestore, canSummarize, onClose }: RestoreDialogProps) {
-  const restore = useRestore(workspaceId);
+  const restore = useRestoreSnapshot(workspaceId);
   const summarize = useSummarize(workspaceId);
   const { requestConsent } = useAiConsent();
   const [error, setError] = useState<string | null>(null);

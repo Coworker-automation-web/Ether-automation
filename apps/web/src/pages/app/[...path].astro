@@ -1,0 +1,42 @@
+---
+import Head from '../_Head.astro';
+import shell from '../../app/components/AppShell.module.css';
+import { Sidebar, type SidebarNavItem } from '../../app/components/Sidebar';
+import { Topbar } from '../../app/components/Topbar';
+import AppRoutes from '../../app/routes/AppRoutes';
+
+// One static page serves every /app/* URL; React Router takes over in the browser. In production the
+// host must answer unknown /app/* paths with this page (single-page-application fallback).
+export function getStaticPaths() {
+  return [{ params: { path: undefined } }];
+}
+
+const navItems: SidebarNavItem[] = [
+  { label: 'Home', href: '/', icon: 'home' },
+  { label: 'Workspaces', href: '/app', icon: 'grid', current: true },
+  { label: 'Library', href: '#', icon: 'folder' },
+  { label: 'Agents', href: '#', icon: 'agents' },
+  { label: 'Templates', href: '#', icon: 'templates' },
+  { label: 'Pricing', href: '#', icon: 'tag' },
+  { label: 'Settings', href: '/app', icon: 'settings' },
+];
+---
+
+<html lang="en">
+  <head>
+    <Head title="Workspace – Ether" description="Your Ether workspace." />
+  </head>
+  <body>
+    <div class={shell.container}>
+      <Sidebar
+        homeHref="/"
+        items={navItems}
+        footer={{ titleLines: ['Build. Collaborate.', 'Grow together.'], markAbove: true }}
+      />
+      <div class={shell.main}>
+        <Topbar initials="V" />
+        <AppRoutes client:only="react" />
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,4 +1,4 @@
-import type { Snapshot } from "@ether/shared";
+import type { MeResponse, Snapshot } from "@ether/shared";
 import type { DocNode } from "../contracts";
 
 export interface MockSnapshot extends Snapshot {
@@ -142,3 +142,17 @@ export function seedSnapshots(nowSec: number): MockSnapshot[] {
     content: s.content,
   }));
 }
+
+/** The signed-in user the mock serves from GET /api/me. Admin, so every part of the UI can be exercised. */
+export const MOCK_ME: MeResponse = {
+  user: { id: "user-demo", email: "veronica@example.com", name: "Veronica", picture: null },
+  memberships: [
+    {
+      orgId: "org-demo",
+      orgName: "Ether Demo",
+      role: "admin",
+      publicWorkspaceId: "ws-public-demo",
+      aiKeyDelegated: false,
+    },
+  ],
+};

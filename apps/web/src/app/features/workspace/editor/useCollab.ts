@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { pickCollab } from "../../../lib/api";
+import { pickCollab } from "../../../lib/client";
 import type { CollabClosedKind, CollabConnection, CollabStatus } from "../../../lib/collab/types";
 import { useRuntimeConfig } from "../../../lib/runtime";
 

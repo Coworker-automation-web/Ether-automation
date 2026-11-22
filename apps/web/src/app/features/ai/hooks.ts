@@ -1,9 +1,9 @@
 import type { AiKeyInfo, AiUsageResponse } from "@ether/shared";
 import { useMutation, useQuery, useQueryClient, type UseQueryResult } from "@tanstack/react-query";
 import type { TestAiKeyRequest } from "../../lib/contracts";
-import { useApi } from "../../lib/api/context";
-import type { TestAiKeyResult } from "../../lib/api/types";
-import { queryKeys } from "../../lib/query";
+import { useApi } from "../../lib/client/context";
+import type { TestAiKeyResult } from "../../lib/client/types";
+import { queryKeys } from "../../lib/queries";
 
 export function useAiUsage(enabled = true): UseQueryResult<AiUsageResponse> {
   const api = useApi();

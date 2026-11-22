@@ -1,9 +1,9 @@
 import { ERROR_STATUS, type AiGenerateInput } from "@ether/shared";
 import { useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useReducer, useRef } from "react";
-import { useApi } from "../../lib/api/context";
+import { useApi } from "../../lib/client/context";
 import { describeError, fromApiError, isAbortError } from "../../lib/errors";
-import { queryKeys } from "../../lib/query";
+import { queryKeys } from "../../lib/queries";
 import { generationReducer, initialGeneration, type GenerationState } from "./generation";
 
 export interface UseGenerate {

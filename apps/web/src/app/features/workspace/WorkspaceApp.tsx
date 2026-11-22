@@ -1,7 +1,7 @@
-import { QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { ApiProvider } from "../../lib/api/context";
-import { createApi, type EtherApi } from "../../lib/api";
+import { ApiProvider } from "../../lib/client/context";
+import { createApi, type EtherApi } from "../../lib/client";
 import { browserConfig, type RuntimeConfig } from "../../lib/config";
 import type { CurrentUser, WorkspaceAccess } from "../../lib/contracts";
 import { createQueryClient } from "../../lib/query";
@@ -22,6 +22,8 @@ export interface WorkspaceAppProps {
   /** Tests and storybook-style hosts; production uses PUBLIC_API_MOCK to pick the transport. */
   readonly config?: RuntimeConfig;
   readonly api?: EtherApi;
+  /** Pass the host's client so history, usage and `me` share one cache. Created here when omitted. */
+  readonly queryClient?: QueryClient;
 }
 
 /**
@@ -31,7 +33,7 @@ export interface WorkspaceAppProps {
 export default function WorkspaceApp(props: WorkspaceAppProps) {
   const [config] = useState<RuntimeConfig>(() => props.config ?? browserConfig());
   const [api] = useState<EtherApi>(() => props.api ?? createApi(config));
-  const [queryClient] = useState(createQueryClient);
+  const [queryClient] = useState<QueryClient>(() => props.queryClient ?? createQueryClient());
   const [internalSettingsOpen, setInternalSettingsOpen] = useState(false);
 
   const settingsOpen = props.settingsOpen ?? internalSettingsOpen;

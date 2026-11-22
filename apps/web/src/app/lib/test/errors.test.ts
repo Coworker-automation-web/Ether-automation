@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ApiRequestError, describeError, errorFromResponse, isAbortError, networkError, toApiRequestError } from "../errors";
+import { ApiError, describeError, errorFromResponse, isAbortError, networkError, toApiError } from "../errors";
 
 describe("describeError", () => {
   it("maps network failures", () => {
@@ -7,7 +7,7 @@ describe("describeError", () => {
   });
 
   it("maps each error code to a state kind", () => {
-    const kind = (code: ConstructorParameters<typeof ApiRequestError>[0]) => describeError(new ApiRequestError(code, "m")).kind;
+    const kind = (code: ConstructorParameters<typeof ApiError>[0]) => describeError(new ApiError(code, "m")).kind;
     expect(kind("unauthenticated")).toBe("auth");
     expect(kind("forbidden")).toBe("forbidden");
     expect(kind("bad_origin")).toBe("forbidden");
@@ -22,10 +22,10 @@ describe("describeError", () => {
   });
 
   it("offers to add a key only for the per-user AI limit, and carries resetAt", () => {
-    const limit = describeError(new ApiRequestError("ai_limit_reached", "m", { resetAt: 100 }));
+    const limit = describeError(new ApiError("ai_limit_reached", "m", { resetAt: 100 }));
     expect(limit.suggestAddKey).toBe(true);
     expect(limit.resetAt).toBe(100);
-    expect(describeError(new ApiRequestError("daily_limit", "m", { resetAt: 100 })).suggestAddKey).toBe(false);
+    expect(describeError(new ApiError("daily_limit", "m", { resetAt: 100 })).suggestAddKey).toBe(false);
   });
 
   it("never leaks raw unknown errors into copy beyond their message", () => {
@@ -50,6 +50,6 @@ describe("helpers", () => {
   it("detects aborts and wraps unknown values", () => {
     expect(isAbortError(new DOMException("x", "AbortError"))).toBe(true);
     expect(isAbortError(new Error("x"))).toBe(false);
-    expect(toApiRequestError(new Error("x"))).toBeInstanceOf(ApiRequestError);
+    expect(toApiError(new Error("x"))).toBeInstanceOf(ApiError);
   });
 });

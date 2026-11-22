@@ -1,6 +1,6 @@
 import { MAX_PROMPT_CHARS, type AiUsageResponse } from "@ether/shared";
 import { describe, expect, it } from "vitest";
-import { ApiRequestError, describeError } from "../../lib/errors";
+import { ApiError, describeError } from "../../lib/errors";
 import { attributionLabel, attributionName, MAX_ATTRIBUTION_NAME } from "./attribution";
 import { generationReducer, initialGeneration } from "./generation";
 import { composePrompt, docToPlainText } from "./prompt";
@@ -75,7 +75,7 @@ describe("generationReducer", () => {
   });
 
   it("discards partial output on failure and resets", () => {
-    const error = describeError(new ApiRequestError("ai_limit_reached", "m", { resetAt: 1 }));
+    const error = describeError(new ApiError("ai_limit_reached", "m", { resetAt: 1 }));
     let s = generationReducer({ status: "streaming", text: "partial" }, { type: "fail", error });
     expect(s).toEqual({ status: "error", error });
     s = generationReducer(s, { type: "reset" });

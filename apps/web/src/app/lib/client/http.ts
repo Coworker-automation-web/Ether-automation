@@ -5,6 +5,9 @@ import {
   aiSummarizeSchema,
   aiUsageResponseSchema,
   MAX_UPLOAD_BYTES,
+  meResponseSchema,
+  nameVersionResponseSchema,
+  nameVersionSchema,
   putAiKeySchema,
   restoreResponseSchema,
   snapshotsResponseSchema,
@@ -13,83 +16,29 @@ import {
   type AiGenerateInput,
 } from "@ether/shared";
 import type { TestAiKeyRequest } from "../contracts";
-import { ApiRequestError, errorFromResponse, isAbortError, networkError } from "../errors";
+import { createApiClient, type ApiClientOptions, type Parser } from "../api";
+import { ApiError } from "../errors";
 import { parseSseStream } from "./sse";
 import type { EtherApi } from "./types";
 
-interface Parser<T> {
-  safeParse(data: unknown): { success: true; data: T } | { success: false; error: unknown };
-}
-
-interface SendOptions {
-  readonly method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-  readonly path: string;
-  readonly body?: unknown;
-  readonly form?: FormData;
-  readonly signal?: AbortSignal | undefined;
-  readonly accept?: string;
-}
-
-export interface HttpApiOptions {
-  /** Prefix for every path. Empty = same origin. */
-  readonly baseUrl?: string;
-  readonly fetchImpl?: typeof fetch;
-}
+export type HttpApiOptions = ApiClientOptions;
 
 const enc = encodeURIComponent;
 
 function validated<T>(parser: Parser<T>, value: unknown): T {
   const r = parser.safeParse(value);
-  if (!r.success) throw new ApiRequestError("validation", "Invalid request", { status: 400, cause: r.error });
+  if (!r.success) throw new ApiError("validation", "Invalid request", { status: 400, cause: r.error });
   return r.data;
 }
 
 export function createHttpApi(options: HttpApiOptions = {}): EtherApi {
-  const base = options.baseUrl ?? "";
-  const doFetch: typeof fetch = options.fetchImpl ?? ((input, init) => fetch(input, init));
-
-  async function send(o: SendOptions): Promise<Response> {
-    const headers: Record<string, string> = { accept: o.accept ?? "application/json" };
-    let body: BodyInit | undefined;
-    if (o.form) {
-      body = o.form;
-    } else if (o.body !== undefined) {
-      headers["content-type"] = "application/json";
-      body = JSON.stringify(o.body);
-    }
-    let res: Response;
-    try {
-      res = await doFetch(base + o.path, {
-        method: o.method,
-        headers,
-        body,
-        signal: o.signal,
-        credentials: "same-origin",
-      });
-    } catch (err) {
-      if (isAbortError(err)) throw err;
-      throw networkError(err);
-    }
-    if (!res.ok) throw await errorFromResponse(res);
-    return res;
-  }
-
-  async function json<T>(parser: Parser<T>, o: SendOptions): Promise<T> {
-    const res = await send(o);
-    let payload: unknown;
-    try {
-      payload = await res.json();
-    } catch (err) {
-      throw new ApiRequestError("internal", "Unexpected response from the server", { status: res.status, cause: err });
-    }
-    const r = parser.safeParse(payload);
-    if (!r.success) {
-      throw new ApiRequestError("internal", "Unexpected response from the server", { status: res.status, cause: r.error });
-    }
-    return r.data;
-  }
+  const { send, json } = createApiClient(options);
 
   return {
+    getMe(signal) {
+      return json(meResponseSchema, { method: "GET", path: "/api/me", signal });
+    },
+
     async listSnapshots(workspaceId, signal) {
       const r = await json(snapshotsResponseSchema, {
         method: "GET",
@@ -97,6 +46,15 @@ export function createHttpApi(options: HttpApiOptions = {}): EtherApi {
         signal,
       });
       return r.snapshots;
+    },
+
+    async createSnapshot(workspaceId, title) {
+      const r = await json(nameVersionResponseSchema, {
+        method: "POST",
+        path: `/api/workspaces/${enc(workspaceId)}/history`,
+        body: validated(nameVersionSchema, { title }),
+      });
+      return r.snapshot;
     },
 
     restoreSnapshot(workspaceId, snapshotId) {
@@ -122,7 +80,7 @@ export function createHttpApi(options: HttpApiOptions = {}): EtherApi {
         signal,
         accept: "text/event-stream",
       });
-      if (!res.body) throw new ApiRequestError("internal", "Empty response stream", { status: res.status });
+      if (!res.body) throw new ApiError("internal", "Empty response stream", { status: res.status });
       yield* parseSseStream(res.body);
     },
 
@@ -153,7 +111,7 @@ export function createHttpApi(options: HttpApiOptions = {}): EtherApi {
 
     async uploadToPublicWorkspace(orgId, file) {
       if (file.size > MAX_UPLOAD_BYTES) {
-        throw new ApiRequestError("payload_too_large", "That file is too large to upload.");
+        throw new ApiError("payload_too_large", "That file is too large to upload.");
       }
       const form = new FormData();
       form.append("file", file, file.name);
