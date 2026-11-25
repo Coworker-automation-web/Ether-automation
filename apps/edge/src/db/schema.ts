@@ -1,7 +1,23 @@
-import { sql } from "drizzle-orm";
-import { check, index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { ROLES } from "@ether/shared";
+import { sql, type SQL } from "drizzle-orm";
+import {
+  blob,
+  check,
+  index,
+  integer,
+  primaryKey,
+  sqliteTable,
+  text,
+  uniqueIndex,
+  type AnySQLiteColumn,
+} from "drizzle-orm/sqlite-core";
+import { MAX_BLOB_BYTES } from "../lib/limits";
 
 const now = sql`(unixepoch())`;
+
+/** DB-level enum guard: Drizzle's `enum` option is TypeScript-only, SQLite would accept any text. */
+const oneOf = (col: AnySQLiteColumn, values: readonly string[]): SQL =>
+  sql`${col} IN (${sql.join(values.map((v) => sql.raw(`'${v}'`)), sql.raw(", "))})`;
 
 export const users = sqliteTable(
   "users",
@@ -16,22 +32,23 @@ export const users = sqliteTable(
   (t) => [uniqueIndex("users_google_sub_uq").on(t.googleSub)],
 );
 
+/** Only the SHA-256 of the session token is stored. Expiry slides: see lib/session.ts. */
 export const sessions = sqliteTable(
   "sessions",
   {
     tokenHash: text("token_hash").primaryKey(),
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     expiresAt: integer("expires_at").notNull(),
+    createdAt: integer("created_at").notNull().default(now),
   },
-  (t) => [index("sessions_user_idx").on(t.userId)],
+  (t) => [index("sessions_user_idx").on(t.userId), index("sessions_expires_idx").on(t.expiresAt)],
 );
 
+/** The Admin is the single active membership with role 'admin' (no duplicate admin column to drift). */
 export const orgs = sqliteTable("orgs", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   createdBy: text("created_by").notNull().references(() => users.id),
-  adminUserId: text("admin_user_id").notNull().references(() => users.id),
-  activeRoleKeyHash: text("active_role_key_hash").notNull(),
   createdAt: integer("created_at").notNull().default(now),
 });
 
@@ -40,11 +57,48 @@ export const memberships = sqliteTable(
   {
     orgId: text("org_id").notNull().references(() => orgs.id, { onDelete: "cascade" }),
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-    role: text("role", { enum: ["admin", "executive", "member", "viewer"] }).notNull(),
+    role: text("role", { enum: ROLES }).notNull(),
     status: text("status", { enum: ["active", "removed"] }).notNull().default("active"),
+    /** Executive only: Admin delegated AI-key management. */
+    aiKeyDelegated: integer("ai_key_delegated", { mode: "boolean" }).notNull().default(false),
     joinedAt: integer("joined_at").notNull().default(now),
   },
-  (t) => [primaryKey({ columns: [t.orgId, t.userId] }), index("memberships_user_idx").on(t.userId)],
+  (t) => [
+    primaryKey({ columns: [t.orgId, t.userId] }),
+    index("memberships_user_idx").on(t.userId, t.status),
+    index("memberships_org_idx").on(t.orgId, t.status),
+    // Exactly one active admin per org.
+    uniqueIndex("memberships_one_admin_per_org")
+      .on(t.orgId)
+      .where(sql`role = 'admin' AND status = 'active'`),
+    check("memberships_role_ck", oneOf(t.role, ROLES)),
+    check("memberships_status_ck", oneOf(t.status, ["active", "removed"])),
+    check("memberships_delegation_ck", sql`${t.aiKeyDelegated} = 0 OR ${t.role} = 'executive'`),
+  ],
+);
+
+/** Role keys are stored as hashes only; the plaintext is shown once at mint time. */
+export const roleKeys = sqliteTable(
+  "role_keys",
+  {
+    id: text("id").primaryKey(),
+    orgId: text("org_id").notNull().references(() => orgs.id, { onDelete: "cascade" }),
+    role: text("role", { enum: ["member", "viewer"] }).notNull(),
+    keyHash: text("key_hash").notNull(),
+    label: text("label").notNull().default(""),
+    expiresAt: integer("expires_at").notNull(),
+    maxUses: integer("max_uses").notNull().default(1),
+    uses: integer("uses").notNull().default(0),
+    revokedAt: integer("revoked_at"),
+    createdBy: text("created_by").notNull().references(() => users.id),
+    createdAt: integer("created_at").notNull().default(now),
+  },
+  (t) => [
+    uniqueIndex("role_keys_hash_uq").on(t.keyHash),
+    index("role_keys_org_idx").on(t.orgId, t.createdAt),
+    check("role_keys_role_ck", oneOf(t.role, ["member", "viewer"])),
+    check("role_keys_uses_ck", sql`${t.maxUses} >= 1 AND ${t.uses} >= 0 AND ${t.uses} <= ${t.maxUses}`),
+  ],
 );
 
 export const workspaces = sqliteTable(
@@ -60,31 +114,46 @@ export const workspaces = sqliteTable(
     updatedAt: integer("updated_at").notNull().default(now),
   },
   (t) => [
-    // Personal: owner and no org. Organisation: org and no owner (arch §6).
+    // Personal: an owner and no org. Organisation: an org and no owner.
     check(
       "workspaces_scope_ck",
       sql`(${t.scope} = 'personal' AND ${t.ownerUserId} IS NOT NULL AND ${t.orgId} IS NULL)
        OR (${t.scope} = 'organisation' AND ${t.orgId} IS NOT NULL AND ${t.ownerUserId} IS NULL)`,
     ),
-    // Exactly one Public Workspace per organisation.
-    uniqueIndex("workspaces_one_public_per_org")
-      .on(t.orgId)
-      .where(sql`${t.scope} = 'organisation'`),
+    check("workspaces_kind_ck", oneOf(t.kind, ["draft", "canvas"])),
+    // At most one Public Workspace per org. "Exactly one" comes from creating it with the org in one batch.
+    uniqueIndex("workspaces_one_public_per_org").on(t.orgId).where(sql`scope = 'organisation'`),
     index("workspaces_owner_idx").on(t.ownerUserId),
   ],
 );
 
-export const uploads = sqliteTable("uploads", {
-  id: text("id").primaryKey(),
-  workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
-  uploadedBy: text("uploaded_by").notNull().references(() => users.id),
-  r2Key: text("r2_key").notNull(),
-  filename: text("filename").notNull(),
-  contentType: text("content_type").notNull(),
-  size: integer("size").notNull(),
-  visibility: text("visibility", { enum: ["private", "published"] }).notNull().default("private"),
-  createdAt: integer("created_at").notNull().default(now),
-});
+export const uploads = sqliteTable(
+  "uploads",
+  {
+    id: text("id").primaryKey(),
+    workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
+    uploadedBy: text("uploaded_by").notNull().references(() => users.id),
+    filename: text("filename").notNull(),
+    contentType: text("content_type").notNull(),
+    size: integer("size").notNull(),
+    visibility: text("visibility", { enum: ["private", "published"] }).notNull().default("private"),
+    createdAt: integer("created_at").notNull().default(now),
+  },
+  (t) => [
+    index("uploads_ws_idx").on(t.workspaceId, t.createdAt),
+    check("uploads_visibility_ck", oneOf(t.visibility, ["private", "published"])),
+  ],
+);
+
+/** 1:1 child of uploads holding the bytes (no R2). Kept apart so list queries never touch blobs. */
+export const uploadData = sqliteTable(
+  "upload_data",
+  {
+    uploadId: text("upload_id").primaryKey().references(() => uploads.id, { onDelete: "cascade" }),
+    data: blob("data", { mode: "buffer" }).notNull(),
+  },
+  (t) => [check("upload_data_size_ck", sql`length(${t.data}) <= ${sql.raw(String(MAX_BLOB_BYTES))}`)],
+);
 
 export const snapshots = sqliteTable(
   "snapshots",
@@ -92,14 +161,27 @@ export const snapshots = sqliteTable(
     id: text("id").primaryKey(),
     workspaceId: text("workspace_id").notNull().references(() => workspaces.id, { onDelete: "cascade" }),
     kind: text("kind", { enum: ["auto", "named", "pre_restore"] }).notNull(),
-    r2Key: text("r2_key").notNull(),
     bytes: integer("bytes").notNull(),
     title: text("title"),
     summary: text("summary"),
     summaryStatus: text("summary_status", { enum: ["none", "pending", "done", "failed"] }).notNull().default("none"),
     createdAt: integer("created_at").notNull().default(now),
   },
-  (t) => [index("snapshots_ws_idx").on(t.workspaceId, t.createdAt)],
+  (t) => [
+    index("snapshots_ws_idx").on(t.workspaceId, t.createdAt),
+    check("snapshots_kind_ck", oneOf(t.kind, ["auto", "named", "pre_restore"])),
+    check("snapshots_summary_status_ck", oneOf(t.summaryStatus, ["none", "pending", "done", "failed"])),
+  ],
+);
+
+/** Yjs state bytes of a snapshot (no R2). */
+export const snapshotData = sqliteTable(
+  "snapshot_data",
+  {
+    snapshotId: text("snapshot_id").primaryKey().references(() => snapshots.id, { onDelete: "cascade" }),
+    data: blob("data", { mode: "buffer" }).notNull(),
+  },
+  (t) => [check("snapshot_data_size_ck", sql`length(${t.data}) <= ${sql.raw(String(MAX_BLOB_BYTES))}`)],
 );
 
 export const aiKeys = sqliteTable(
@@ -140,5 +222,5 @@ export const auditLog = sqliteTable(
     meta: text("meta"),
     createdAt: integer("created_at").notNull().default(now),
   },
-  (t) => [index("audit_org_idx").on(t.orgId, t.createdAt)],
+  (t) => [index("audit_org_idx").on(t.orgId, t.createdAt), index("audit_actor_idx").on(t.actorId, t.createdAt)],
 );

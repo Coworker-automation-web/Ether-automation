@@ -4,10 +4,19 @@ function toHex(buf: ArrayBuffer): string {
   return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-function toBase64Url(bytes: Uint8Array): string {
+function toBase64(bytes: Uint8Array): string {
+  // A loop, not String.fromCharCode(...bytes): spreading a large array overflows the call stack.
   let s = "";
   for (const b of bytes) s += String.fromCharCode(b);
-  return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  return btoa(s);
+}
+
+function fromBase64(b64: string): Uint8Array {
+  return Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+}
+
+function toBase64Url(bytes: Uint8Array): string {
+  return toBase64(bytes).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
 /** SHA-256 hex digest. Used for session tokens and role keys (high-entropy secrets, so no salt/KDF needed). */
@@ -31,7 +40,7 @@ export function timingSafeEqual(a: string, b: string): boolean {
 }
 
 async function importAesKey(base64Key: string): Promise<CryptoKey> {
-  const raw = Uint8Array.from(atob(base64Key), (c) => c.charCodeAt(0));
+  const raw = fromBase64(base64Key);
   if (raw.length !== 32) throw new Error("ENCRYPTION_KEY must be 32 bytes, base64-encoded");
   return crypto.subtle.importKey("raw", raw, "AES-GCM", false, ["encrypt", "decrypt"]);
 }
@@ -41,13 +50,13 @@ export async function encryptSecret(plaintext: string, base64Key: string) {
   const key = await importAesKey(base64Key);
   const iv = crypto.getRandomValues(new Uint8Array(12));
   const ct = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, enc.encode(plaintext));
-  return { ciphertext: btoa(String.fromCharCode(...new Uint8Array(ct))), iv: btoa(String.fromCharCode(...iv)) };
+  return { ciphertext: toBase64(new Uint8Array(ct)), iv: toBase64(iv) };
 }
 
 export async function decryptSecret(ciphertext: string, iv: string, base64Key: string): Promise<string> {
   const key = await importAesKey(base64Key);
-  const ctBytes = Uint8Array.from(atob(ciphertext), (c) => c.charCodeAt(0));
-  const ivBytes = Uint8Array.from(atob(iv), (c) => c.charCodeAt(0));
+  const ctBytes = fromBase64(ciphertext);
+  const ivBytes = fromBase64(iv);
   const pt = await crypto.subtle.decrypt({ name: "AES-GCM", iv: ivBytes }, key, ctBytes);
   return new TextDecoder().decode(pt);
 }

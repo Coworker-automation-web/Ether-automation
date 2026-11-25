@@ -9,7 +9,7 @@
   "d1_databases": [
     { "binding": "DB", "database_name": "ether", "database_id": "REPLACE_WITH_D1_ID", "migrations_dir": "src/db/migrations" }
   ],
-  "r2_buckets": [{ "binding": "FILES", "bucket_name": "ether-files" }],
+  // No R2: snapshot and upload bytes live in D1 child tables (see src/db/schema.ts).
   "durable_objects": {
     "bindings": [
       { "name": "WORKSPACE_ROOM", "class_name": "WorkspaceRoom" },

@@ -131,7 +131,8 @@ export const createPersonalWorkspaceSchema = z.object({ title: z.string().trim()
 export const createPersonalWorkspaceResponseSchema = z.object({ workspace: workspaceSchema });
 export const publicWorkspaceResponseSchema = z.object({ workspace: workspaceSchema, role: roleSchema });
 
-export const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
+/** No R2: upload bytes live in D1 rows (about 2 MB platform cap), so uploads are capped well below 10 MiB. */
+export const MAX_UPLOAD_BYTES = 1_500_000;
 export const uploadSchema = z.object({
   id: idSchema,
   workspaceId: idSchema,

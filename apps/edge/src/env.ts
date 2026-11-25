@@ -1,6 +1,5 @@
 export interface Env {
   DB: D1Database;
-  FILES: R2Bucket;
   WORKSPACE_ROOM: DurableObjectNamespace;
   QUOTA_GUARD: DurableObjectNamespace;
   APP_ORIGIN: string;
