@@ -1,0 +1,41 @@
+---
+import { Icon } from './Icon';
+import styles from './HeroVisual.module.css';
+
+interface Props {
+  /** One or two letters for each of the three neutral avatar circles. */
+  initials: [string, string, string];
+}
+
+const { initials } = Astro.props;
+const avatarClasses = [styles.av1, styles.av2, styles.av3];
+---
+
+<div class={styles.visual} aria-hidden="true">
+  <!-- Curved golden orbit paths -->
+  <svg class={styles.orbit} viewBox="0 0 440 340" fill="none">
+    <path d="M 40 320 Q 240 220 380 40" stroke="#E6DACD" stroke-width="1.2" stroke-dasharray="3 3"></path>
+    <path d="M 120 330 Q 300 180 420 120" stroke="#DFD1C2" stroke-width="1"></path>
+    <circle cx="210" cy="225" r="3" fill="#C4A78E"></circle>
+    <circle cx="340" cy="95" r="2.5" fill="#C4A78E"></circle>
+    <path d="M310 135 L313 145 L323 148 L313 151 L310 161 L307 151 L297 148 L307 145 Z" fill="#C4A78E" opacity="0.8"></path>
+  </svg>
+
+  <div class={styles.teamCard}>
+    <Icon name="users" strokeWidth={1.8} />
+  </div>
+
+  {initials.map((letter, i) => <div class:list={[styles.avatar, avatarClasses[i]]}>{letter}</div>)}
+
+  <div class={styles.docCard}>
+    <div class:list={[styles.docLine, styles.w80]}></div>
+    <div class:list={[styles.docLine, styles.w60]}></div>
+    <div class:list={[styles.docLine, styles.w90]}></div>
+    <div class={styles.docThumb}>
+      <svg class={styles.docThumbDunes} viewBox="0 0 140 60" preserveAspectRatio="none" fill="none">
+        <path d="M0 45 C40 25, 80 55, 140 30 L140 60 L0 60 Z" fill="#D3C3B1"></path>
+        <path d="M0 30 C50 50, 90 20, 140 45 L140 60 L0 60 Z" fill="#C4B29E"></path>
+      </svg>
+    </div>
+  </div>
+</div>

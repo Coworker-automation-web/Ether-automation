@@ -1,0 +1,15 @@
+---
+import FeatureCard, { type Props as FeatureCardProps } from './FeatureCard.astro';
+import styles from './FeatureGrid.module.css';
+
+interface Props {
+  id: string;
+  items: FeatureCardProps[];
+}
+
+const { id, items } = Astro.props;
+---
+
+<section class={styles.grid} id={id}>
+  {items.map((item) => <FeatureCard {...item} />)}
+</section>

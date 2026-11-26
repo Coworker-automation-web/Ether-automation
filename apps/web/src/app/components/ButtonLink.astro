@@ -1,0 +1,22 @@
+---
+import { Icon, type IconName } from './Icon';
+import styles from './Button.module.css';
+
+interface Props {
+  variant: 'primary' | 'outline';
+  href: string;
+  icon?: IconName;
+  iconPosition?: 'before' | 'after';
+  iconStrokeWidth?: number;
+  /** Selector of an in-page element to smooth-scroll to (enhanced by the landing script). */
+  scrollTo?: string;
+}
+
+const { variant, href, icon, iconPosition = 'after', iconStrokeWidth, scrollTo } = Astro.props;
+---
+
+<a href={href} class={styles[variant]} data-scroll-to={scrollTo}>
+  {icon && iconPosition === 'before' && <Icon name={icon} strokeWidth={iconStrokeWidth} />}
+  <span><slot /></span>
+  {icon && iconPosition === 'after' && <Icon name={icon} strokeWidth={iconStrokeWidth} />}
+</a>

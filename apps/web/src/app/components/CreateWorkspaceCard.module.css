@@ -55,3 +55,12 @@
     flex-direction: column;
   }
 }
+
+@media (max-width: 768px) {
+  .card {
+    padding: 28px 22px;
+  }
+  .title {
+    font-size: 32px;
+  }
+}

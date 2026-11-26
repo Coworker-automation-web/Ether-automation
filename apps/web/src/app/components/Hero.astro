@@ -1,0 +1,51 @@
+---
+import Badge from './Badge.astro';
+import ButtonLink from './ButtonLink.astro';
+import HeroVisual from './HeroVisual.astro';
+import { Icon } from './Icon';
+import styles from './Hero.module.css';
+
+interface Props {
+  badgeLabel: string;
+  /** Heading lines before the emphasised word, joined with <br>. */
+  headingLines: string[];
+  /** Italic closing word(s) of the heading. */
+  headingEmphasis: string;
+  description: string;
+  primaryLabel: string;
+  primaryHref: string;
+  secondaryLabel: string;
+  /** In-page anchor; the landing script upgrades it to a smooth scroll. */
+  secondaryHref: string;
+  avatarInitials: [string, string, string];
+}
+
+const {
+  badgeLabel, headingLines, headingEmphasis, description,
+  primaryLabel, primaryHref, secondaryLabel, secondaryHref, avatarInitials,
+} = Astro.props;
+---
+
+<section class={styles.block}>
+  <div class={styles.left}>
+    <Badge tone="orange" label={badgeLabel} />
+
+    <h1 class={styles.heading}>
+      {headingLines.map((line, i) => (<Fragment>{i > 0 && <br />}{line}</Fragment>))}{' '}<em>{headingEmphasis}</em>
+    </h1>
+
+    <p class={styles.desc}>{description}</p>
+
+    <div class={styles.ctaRow}>
+      <ButtonLink variant="primary" href={primaryHref} icon="arrow-right">{primaryLabel}</ButtonLink>
+      <a href={secondaryHref} class={styles.learnMore} data-scroll-to={secondaryHref}>
+        <div class={styles.playCircle}>
+          <Icon name="play-fill" />
+        </div>
+        <span>{secondaryLabel}</span>
+      </a>
+    </div>
+  </div>
+
+  <HeroVisual initials={avatarInitials} />
+</section>

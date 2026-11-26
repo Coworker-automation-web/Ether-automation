@@ -1,0 +1,26 @@
+---
+import ButtonLink from './ButtonLink.astro';
+import { Icon } from './Icon';
+import styles from './LoginCard.module.css';
+
+interface Props {
+  title: string;
+  description: string;
+  ctaLabel: string;
+  ctaHref: string;
+}
+
+const { title, description, ctaLabel, ctaHref } = Astro.props;
+---
+
+<main class={styles.page}>
+  <div class={styles.card}>
+    <div class={styles.logo}>
+      <Icon name="sparkle" className={styles.logoStar} />
+      <span class={styles.logoText}>Ether</span>
+    </div>
+    <h1 class={styles.title}>{title}</h1>
+    <p class={styles.desc}>{description}</p>
+    <ButtonLink variant="primary" href={ctaHref} icon="arrow-right">{ctaLabel}</ButtonLink>
+  </div>
+</main>

@@ -88,3 +88,9 @@
     font-size: 38px;
   }
 }
+
+@media (max-width: 480px) {
+  .heading {
+    font-size: 32px;
+  }
+}

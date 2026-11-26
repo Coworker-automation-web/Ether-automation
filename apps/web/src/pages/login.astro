@@ -1,38 +1,18 @@
 ---
 import Head from './_Head.astro';
-import { Button } from '../app/components/Button';
+import LoginCard from '../app/components/LoginCard.astro';
 ---
 
 <html lang="en">
   <head>
-    <Head
-      title="Sign in · ETHER"
-      description="Sign in to Ether with your Google account."
-    />
+    <Head title="Sign in – Ether" description="Sign in to Ether with your Google account." />
   </head>
   <body>
-    <main class="login">
-      <h1>Sign in</h1>
-      <Button variant="primary" href="/api/auth/google">Continue with Google</Button>
-    </main>
+    <LoginCard
+      title="Welcome to Ether"
+      description="Sign in to plan, create and collaborate with your team."
+      ctaLabel="Continue with Google"
+      ctaHref="/api/auth/google"
+    />
   </body>
 </html>
-
-<style>
-  .login {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    padding: 0 16px;
-  }
-  h1 {
-    font-family: var(--font-serif);
-    font-size: 38px;
-    font-weight: 500;
-    letter-spacing: -0.015em;
-    color: var(--text-main);
-  }
-</style>

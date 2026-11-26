@@ -1,0 +1,33 @@
+---
+import { Icon } from './Icon';
+import styles from './WorkspaceMockup.module.css';
+---
+
+<!-- Decorative clay-style illustration of the workspace window -->
+<div class={styles.mockup} aria-hidden="true">
+  <div class={styles.topDots}>
+    <div class={styles.dot}></div>
+    <div class={styles.dot}></div>
+    <div class={styles.dot}></div>
+  </div>
+
+  <div class={styles.body}>
+    <div class={styles.miniSidebar}>
+      <div class={styles.barIcon}></div>
+      <div class={styles.barIcon}></div>
+      <div class={styles.barIcon}></div>
+      <div class={styles.barIcon}></div>
+    </div>
+
+    <div class={styles.canvas}>
+      <Icon name="sparkle" className={styles.canvasStar} />
+      <Icon name="cursor" className={styles.cursorArrow} />
+    </div>
+  </div>
+
+  <div class={styles.rays}>
+    <div class={styles.ray}></div>
+    <div class={styles.ray}></div>
+    <div class={styles.ray}></div>
+  </div>
+</div>

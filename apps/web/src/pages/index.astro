@@ -1,31 +1,21 @@
 ---
 import Head from './_Head.astro';
+import { navItems } from './_nav';
 import shell from '../app/components/AppShell.module.css';
 import landing from '../app/components/LandingContent.module.css';
-import { Sidebar, type SidebarNavItem } from '../app/components/Sidebar';
+import { Sidebar } from '../app/components/Sidebar';
 import { Topbar } from '../app/components/Topbar';
-import { Hero } from '../app/components/Hero';
-import { CreateWorkspace } from '../app/components/CreateWorkspace';
-import { Features } from '../app/components/Features';
-import type { FeatureCardProps } from '../app/components/FeatureCard';
-import { TeamsSection } from '../app/components/TeamsSection';
+import Hero from '../app/components/Hero.astro';
+import CreateWorkspaceCard from '../app/components/CreateWorkspaceCard.astro';
+import FeatureGrid from '../app/components/FeatureGrid.astro';
+import TeamsSection from '../app/components/TeamsSection.astro';
 
-const navItems: SidebarNavItem[] = [
-  { label: 'Home', href: '/', icon: 'home', current: true },
-  { label: 'Workspaces', href: '/app', icon: 'grid' },
-  { label: 'Library', href: '#', icon: 'folder' },
-  { label: 'Agents', href: '#', icon: 'agents' },
-  { label: 'Templates', href: '#', icon: 'templates' },
-  { label: 'Pricing', href: '#', icon: 'tag' },
-  { label: 'Settings', href: '/app', icon: 'settings' },
-];
-
-const features: FeatureCardProps[] = [
+const features = [
   { icon: 'zap', titleLines: ['Real-time', 'Collaboration'], description: 'Work together, instantly.' },
   { icon: 'box', titleLines: ['AI-Powered', 'Productivity'], description: 'Build smarter, faster.' },
   { icon: 'shield-check', titleLines: ['Secure & Private'], description: 'Your data, your control.' },
   { icon: 'grid', titleLines: ['Flexible Workspaces'], description: 'Organise your work your way.' },
-];
+] as const;
 ---
 
 <html lang="en">
@@ -39,7 +29,7 @@ const features: FeatureCardProps[] = [
     <div class={shell.container}>
       <Sidebar
         homeHref="/"
-        items={navItems}
+        items={navItems('/')}
         footer={{ titleLines: ['Build. Collaborate.', 'Grow together.'], markAbove: true }}
       />
 
@@ -53,22 +43,22 @@ const features: FeatureCardProps[] = [
             headingEmphasis="Together."
             description="Plan, create, and collaborate — all in one powerful workspace for your team and ideas."
             primaryLabel="Get Started"
-            primaryHref="/app"
+            primaryHref="/login"
             secondaryLabel="Learn More"
             secondaryHref="#create-workspace"
-            avatars={['/avatars/team-1.svg', '/avatars/team-2.svg', '/avatars/team-3.svg']}
+            avatarInitials={['A', 'M', 'S']}
           />
 
-          <CreateWorkspace
+          <CreateWorkspaceCard
             id="create-workspace"
             tagLabel="Start with Ether"
             titleLines={['Create your', 'workspace']}
             description="Turn ideas into action. Start a new workspace and bring your team together."
             ctaLabel="New Workspace"
-            ctaHref="/app"
+            ctaHref="/login"
           />
 
-          <Features id="features" items={features} />
+          <FeatureGrid id="features" items={features.map((f) => ({ ...f, titleLines: [...f.titleLines] }))} />
 
           <TeamsSection
             eyebrow="Built for teams"
@@ -80,5 +70,7 @@ const features: FeatureCardProps[] = [
         </main>
       </div>
     </div>
+
+    <script src="./_landing-scroll.ts"></script>
   </body>
 </html>

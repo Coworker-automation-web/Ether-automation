@@ -1,0 +1,15 @@
+---
+import styles from './Badge.module.css';
+
+interface Props {
+  label: string;
+  tone: 'orange' | 'green';
+}
+
+const { label, tone } = Astro.props;
+---
+
+<div class={styles.badge}>
+  <span class:list={[styles.dot, tone === 'orange' ? styles.dotOrange : styles.dotGreen]}></span>
+  <span>{label}</span>
+</div>

@@ -136,10 +136,19 @@
     width: 70px;
     padding: 20px 8px;
   }
-  .logoText,
-  .navLink span,
   .footerCard {
     display: none;
+  }
+  /* Hide labels visually but keep them as the links' accessible names (display:none would drop them). */
+  .logoText,
+  .navLink span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
   .navLink {
     justify-content: center;

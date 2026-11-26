@@ -1,0 +1,37 @@
+---
+import ButtonLink from './ButtonLink.astro';
+import { Icon } from './Icon';
+import styles from './TeamsSection.module.css';
+
+interface Props {
+  eyebrow: string;
+  titleLines: string[];
+  description: string;
+  ctaLabel: string;
+  /** In-page anchor; the landing script upgrades it to a smooth scroll. */
+  ctaHref: string;
+}
+
+const { eyebrow, titleLines, description, ctaLabel, ctaHref } = Astro.props;
+---
+
+<section class={styles.section}>
+  <div class={styles.planetContainer} aria-hidden="true">
+    <Icon name="sparkle" className={styles.sparkle} />
+    <div class={styles.planetDome}></div>
+    <div class={styles.planetRing}></div>
+  </div>
+
+  <div class={styles.eyebrowRow}>
+    <div class={styles.eyebrowLine}></div>
+    <span class={styles.eyebrowText}>{eyebrow}</span>
+    <div class={styles.eyebrowLine}></div>
+  </div>
+
+  <h2 class={styles.title}>
+    {titleLines.map((line, i) => (<Fragment>{i > 0 && <br />}{line}</Fragment>))}
+  </h2>
+  <p class={styles.desc}>{description}</p>
+
+  <ButtonLink variant="outline" href={ctaHref} icon="arrow-right" scrollTo={ctaHref}>{ctaLabel}</ButtonLink>
+</section>

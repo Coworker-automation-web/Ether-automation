@@ -1,0 +1,37 @@
+---
+import ButtonLink from './ButtonLink.astro';
+import { Icon } from './Icon';
+import WorkspaceMockup from './WorkspaceMockup.astro';
+import styles from './CreateWorkspaceCard.module.css';
+
+interface Props {
+  id: string;
+  tagLabel: string;
+  titleLines: string[];
+  description: string;
+  ctaLabel: string;
+  ctaHref: string;
+}
+
+const { id, tagLabel, titleLines, description, ctaLabel, ctaHref } = Astro.props;
+---
+
+<section class={styles.card} id={id}>
+  <div class={styles.left}>
+    <div class={styles.tag}>
+      <Icon name="square-x" />
+      <span>{tagLabel}</span>
+    </div>
+
+    <h2 class={styles.title}>
+      {titleLines.map((line, i) => (<Fragment>{i > 0 && <br />}{line}</Fragment>))}
+    </h2>
+    <p class={styles.desc}>{description}</p>
+
+    <ButtonLink variant="primary" href={ctaHref} icon="plus" iconPosition="before" iconStrokeWidth={2.5}>
+      {ctaLabel}
+    </ButtonLink>
+  </div>
+
+  <WorkspaceMockup />
+</section>
